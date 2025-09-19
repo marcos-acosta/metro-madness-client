@@ -45,13 +45,10 @@ export default function Bracket(props: BracketProps) {
       {/* Round 2 - Round of 16 */}
       <div className={styles.round}>
         <div className={styles.matchSlot}>
-          {getMatch("7") && <BracketMatch match={getMatch("7")!} />}
-        </div>
-        <div className={styles.matchSlot}>
-          {getMatch("8") && <BracketMatch match={getMatch("8")!} />}
-        </div>
-        <div className={styles.matchSlot}>
           {getMatch("9") && <BracketMatch match={getMatch("9")!} />}
+        </div>
+        <div className={styles.matchSlot}>
+          {getMatch("7") && <BracketMatch match={getMatch("7")!} />}
         </div>
         <div className={styles.matchSlot}>
           {getMatch("10") && <BracketMatch match={getMatch("10")!} />}
@@ -61,6 +58,9 @@ export default function Bracket(props: BracketProps) {
         </div>
         <div className={styles.matchSlot}>
           {getMatch("12") && <BracketMatch match={getMatch("12")!} />}
+        </div>
+        <div className={styles.matchSlot}>
+          {getMatch("8") && <BracketMatch match={getMatch("8")!} />}
         </div>
         <div className={styles.matchSlot}>
           {getMatch("13") && <BracketMatch match={getMatch("13")!} />}

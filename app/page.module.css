@@ -5,20 +5,158 @@
 /* Bracket Layout */
 .bracket {
   display: flex;
-  gap: 40px;
+  gap: 60px;
   padding: 20px;
   overflow-x: auto;
+  position: relative;
 }
 
 .round {
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
-  min-height: 600px;
+  position: relative;
+  width: 100px; /* Fixed width for consistent spacing */
 }
 
 .matchSlot {
-  margin: 10px 0;
+  position: absolute;
+  width: 100px;
+}
+
+/* Fixed positioning for each round */
+/* Round 1 - 6 matches - aligned with their direct targets in round 2 */
+.round:nth-child(1) .matchSlot:nth-child(1) { top: 40px; } /* → Match 9 (pos 1) */
+.round:nth-child(1) .matchSlot:nth-child(2) { top: 200px; } /* → Match 10 (pos 3) */
+.round:nth-child(1) .matchSlot:nth-child(3) { top: 280px; } /* → Match 11 (pos 4) */
+.round:nth-child(1) .matchSlot:nth-child(4) { top: 360px; } /* → Match 12 (pos 5) */
+.round:nth-child(1) .matchSlot:nth-child(5) { top: 520px; } /* → Match 13 (pos 7) */
+.round:nth-child(1) .matchSlot:nth-child(6) { top: 600px; } /* → Match 14 (pos 8) */
+
+/* Round 2 - 8 matches (round of 16) */
+.round:nth-child(2) .matchSlot:nth-child(1) { top: 40px; }
+.round:nth-child(2) .matchSlot:nth-child(2) { top: 120px; }
+.round:nth-child(2) .matchSlot:nth-child(3) { top: 200px; }
+.round:nth-child(2) .matchSlot:nth-child(4) { top: 280px; }
+.round:nth-child(2) .matchSlot:nth-child(5) { top: 360px; }
+.round:nth-child(2) .matchSlot:nth-child(6) { top: 440px; }
+.round:nth-child(2) .matchSlot:nth-child(7) { top: 520px; }
+.round:nth-child(2) .matchSlot:nth-child(8) { top: 600px; }
+
+/* Round 3 - 4 matches (quarterfinals) - aligned with round 2 pairs */
+.round:nth-child(3) .matchSlot:nth-child(1) { top: 80px; }
+.round:nth-child(3) .matchSlot:nth-child(2) { top: 240px; }
+.round:nth-child(3) .matchSlot:nth-child(3) { top: 400px; }
+.round:nth-child(3) .matchSlot:nth-child(4) { top: 560px; }
+
+/* Round 4 - 2 matches (semifinals) - aligned with round 3 pairs */
+.round:nth-child(4) .matchSlot:nth-child(1) { top: 160px; }
+.round:nth-child(4) .matchSlot:nth-child(2) { top: 480px; }
+
+/* Round 5 - 1 match (championship) - aligned with round 4 pair */
+.round:nth-child(5) .matchSlot:nth-child(1) { top: 320px; }
+
+/* Set minimum height for bracket container */
+.bracket {
+  min-height: 700px;
+}
+
+/* Horizontal connector lines from each match (except final) */
+.matchSlot::after {
+  content: '';
+  position: absolute;
+  right: -30px;
+  top: 25px; /* Center of match box */
+  width: 30px;
+  height: 2px;
+  background-color: #666;
+  z-index: 1;
+}
+
+/* Remove connector line from championship match */
+.round:last-child .matchSlot::after {
+  display: none;
+}
+
+/* Round 1 has no vertical connectors - direct 1:1 mapping to Round 2 */
+
+/* Round 2 to Round 3 connectors */
+.round:nth-child(2) .matchSlot:nth-child(1)::before {
+  content: '';
+  position: absolute;
+  right: -30px;
+  top: 25px;
+  width: 2px;
+  height: 80px;
+  background-color: #666;
+  z-index: 2;
+}
+
+.round:nth-child(2) .matchSlot:nth-child(3)::before {
+  content: '';
+  position: absolute;
+  right: -30px;
+  top: 25px;
+  width: 2px;
+  height: 80px;
+  background-color: #666;
+  z-index: 2;
+}
+
+.round:nth-child(2) .matchSlot:nth-child(5)::before {
+  content: '';
+  position: absolute;
+  right: -30px;
+  top: 25px;
+  width: 2px;
+  height: 80px;
+  background-color: #666;
+  z-index: 2;
+}
+
+.round:nth-child(2) .matchSlot:nth-child(7)::before {
+  content: '';
+  position: absolute;
+  right: -30px;
+  top: 25px;
+  width: 2px;
+  height: 80px;
+  background-color: #666;
+  z-index: 2;
+}
+
+/* Round 3 to Round 4 connectors */
+.round:nth-child(3) .matchSlot:nth-child(1)::before {
+  content: '';
+  position: absolute;
+  right: -30px;
+  top: 25px;
+  width: 2px;
+  height: 160px;
+  background-color: #666;
+  z-index: 2;
+}
+
+.round:nth-child(3) .matchSlot:nth-child(3)::before {
+  content: '';
+  position: absolute;
+  right: -30px;
+  top: 25px;
+  width: 2px;
+  height: 160px;
+  background-color: #666;
+  z-index: 2;
+}
+
+/* Round 4 to Round 5 connector */
+.round:nth-child(4) .matchSlot:nth-child(1)::before {
+  content: '';
+  position: absolute;
+  right: -30px;
+  top: 25px;
+  width: 2px;
+  height: 320px;
+  background-color: #666;
+  z-index: 2;
 }
 
 /* Individual Match Styling */
