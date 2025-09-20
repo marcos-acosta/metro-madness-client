@@ -13,10 +13,14 @@ export default function BracketMatchRoute(props: BracketMatchRouteProps) {
   return (
     <div className={combineClasses(styles.bracketRouteContainer)}>
       <div className={styles.bracketMatchBulletContainer}>
-        {props.routeId ? <ServiceBullet routeId={props.routeId} /> : "?"}
+        {props.routeId ? (
+          <ServiceBullet routeId={props.routeId} />
+        ) : (
+          <div className={styles.bracketMatchBulletTbd}>?</div>
+        )}
       </div>
       <div className={styles.bracketMatchNameContainer}>
-        {props.routeId ? getNameFromRouteId(props.routeId) : "TBD"}
+        {props.routeId && getNameFromRouteId(props.routeId)}
       </div>
       {props.decided && !props.winner && <div className={styles.loserShader} />}
     </div>
