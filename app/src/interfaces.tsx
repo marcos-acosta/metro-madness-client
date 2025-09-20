@@ -60,7 +60,7 @@ export interface Stop {
 }
 
 export interface TripData {
-  routeId?: string;
+  routeId?: RouteId;
   winnerMatchId?: string;
   tripStatus?: TripStatus;
   tripId?: string;

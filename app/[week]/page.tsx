@@ -1,5 +1,6 @@
 import { Suspense } from "react";
 import Bracket from "../src/components/Bracket";
+import styles from "./../page.module.css";
 
 interface WeekData {
   week: string;
@@ -33,9 +34,11 @@ function WeekContent({ week }: { week: string }) {
   return (
     <div>
       <h1>Week {week}</h1>
-      <Suspense fallback={<div>Fetching bracket matches...</div>}>
-        <BracketData week={week} />
-      </Suspense>
+      <div className={styles.bracketContainer}>
+        <Suspense fallback={<div>Fetching bracket matches...</div>}>
+          <BracketData week={week} />
+        </Suspense>
+      </div>
     </div>
   );
 }

@@ -1,6 +1,6 @@
 import { Match } from "../interfaces";
-import { combineClasses } from "../util";
 import styles from "./../../page.module.css";
+import BracketMatchRoute from "./BracketMatchRoute";
 
 interface BracketMatchProps {
   match: Match;
@@ -12,22 +12,16 @@ export default function BracketMatch(props: BracketMatchProps) {
   const winner = props.match.matchData.matchResult?.winner;
   return (
     <div className={styles.bracketMatchContainer}>
-      <div
-        className={combineClasses(
-          styles.bracketRouteContainer,
-          winner === firstRoute && styles.winner
-        )}
-      >
-        {firstRoute || "?"}
-      </div>
-      <div
-        className={combineClasses(
-          styles.bracketRouteContainer,
-          winner === secondRoute && styles.winner
-        )}
-      >
-        {secondRoute || "?"}
-      </div>
+      <BracketMatchRoute
+        routeId={firstRoute}
+        winner={winner && winner === firstRoute}
+        decided={Boolean(winner)}
+      />
+      <BracketMatchRoute
+        routeId={secondRoute}
+        winner={winner && winner === secondRoute}
+        decided={Boolean(winner)}
+      />
     </div>
   );
 }
