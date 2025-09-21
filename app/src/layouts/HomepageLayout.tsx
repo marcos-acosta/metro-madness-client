@@ -1,11 +1,12 @@
 "use client";
 
 import { useState } from "react";
-import { Match, RouteId } from "../interfaces";
+import { Match } from "../interfaces";
 import styles from "./../../page.module.css";
 import {
   getAllRoutesStillCompeting,
   getCurrentWeek,
+  getMatchesInRound,
   getRoundToShowForWeek,
 } from "../util";
 import Header from "../components/Header";
@@ -14,7 +15,6 @@ import MatchesDashboard from "../components/MatchesDashboard";
 import Bracket from "../components/Bracket";
 import Footer from "../components/Footer";
 import SectionHeader from "../components/SectionHeader";
-import { ROUND_NAMES } from "../constants";
 import WeekSelector from "../components/WeekSelector";
 
 interface HomepageLayoutProps {
@@ -34,7 +34,11 @@ export default function HomepageLayout(props: HomepageLayoutProps) {
   );
 
   const roundToShow = getRoundToShowForWeek(selectedWeek);
-  const dashboardHeaderText = ROUND_NAMES[roundToShow];
+
+  const matchesInRoundToShow = getMatchesInRound(
+    matchesForSelectedWeek,
+    roundToShow
+  );
 
   return (
     <div className={styles.pageInnerContainer}>
@@ -48,24 +52,24 @@ export default function HomepageLayout(props: HomepageLayoutProps) {
         />
       </div>
       <div className={styles.whiteBg}>
-        <div className={styles.weekSelectorOuterContainer}>
-          <WeekSelector
-            matches={storedMatches}
-            selectedWeek={selectedWeek}
-            setSelectedWeek={setSelectedWeek}
-          />
-        </div>
         <div className={styles.sectionHeaderOuterContainer}>
-          <SectionHeader text={dashboardHeaderText} />
+          <SectionHeader text={"Live results"} />
         </div>
         <div className={styles.matchesDashboardOuterContainer}>
-          <MatchesDashboard matches={matchesForSelectedWeek} />
+          <MatchesDashboard matches={matchesInRoundToShow} />
         </div>
         <div className={styles.sectionHeaderOuterContainer}>
           <SectionHeader text={"Bracket"} />
         </div>
         <div className={styles.bracketOuterContainer}>
           <Bracket matches={matchesForSelectedWeek} />
+        </div>
+        <div className={styles.weekSelectorOuterContainer}>
+          <WeekSelector
+            matches={storedMatches}
+            selectedWeek={selectedWeek}
+            setSelectedWeek={setSelectedWeek}
+          />
         </div>
       </div>
       <div className={styles.footerOuterContainer}>

@@ -180,3 +180,21 @@ export const formatDatestringShort = (ds: string) => {
 
 export const matchesHaveWeek = (matches: Match[], weekString: string) =>
   matches.some((match) => match.bracketId === weekString);
+
+export const matchIdToRoundNumber = (matchId: string) => {
+  const matchIdInt = parseInt(matchId);
+  if (matchIdInt < 7) {
+    return 0;
+  } else if (matchIdInt < 15) {
+    return 1;
+  } else if (matchIdInt < 19) {
+    return 2;
+  } else if (matchIdInt < 21) {
+    return 3;
+  } else {
+    return 4;
+  }
+};
+
+export const getMatchesInRound = (matches: Match[], round: number) =>
+  matches.filter((match) => matchIdToRoundNumber(match.matchId) === round);
