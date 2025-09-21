@@ -1,4 +1,7 @@
+import { FIRST_WEEK_DATE, NUM_MATCHES } from "./constants";
 import { Match, MatchData, RouteId } from "./interfaces";
+import { differenceInCalendarDays, parseISO, startOfDay } from "date-fns";
+import { toZonedTime, fromZonedTime } from "date-fns-tz";
 
 export const combineClasses = (
   ...classnames: (string | undefined | false | null)[]
@@ -59,16 +62,25 @@ export const getNameFromRouteId = (routeId: RouteId) => {
   }
 };
 
-export const getTodayDate = () => {
-  // Get current date in NYC timezone
-  return new Date().toLocaleString("en-US", {
+export const getTodayDateEST = () => {
+  const now = new Date();
+  const nycTime = toZonedTime(now, "America/New_York");
+  return startOfDay(nycTime);
+};
+
+export const dateToDatestring = (d: Date) => {
+  return d.toLocaleDateString("en-CA", {
     timeZone: "America/New_York",
   });
 };
 
+export const datestringToDate = (ds: string) => {
+  const localDate = parseISO(ds + "T00:00:00");
+  return fromZonedTime(localDate, "America/New_York");
+};
+
 export const getCurrentWeek = () => {
-  const nowInNYC = getTodayDate();
-  const nycDate = new Date(nowInNYC);
+  const nycDate = getTodayDateEST();
 
   const dayOfWeek = nycDate.getDay(); // 0 = Sunday, 1 = Monday, etc.
   const daysBack = dayOfWeek === 1 ? 0 : dayOfWeek === 0 ? 6 : dayOfWeek - 1;
@@ -76,9 +88,7 @@ export const getCurrentWeek = () => {
   const latestMonday = new Date(nycDate);
   latestMonday.setDate(nycDate.getDate() - daysBack);
 
-  return latestMonday.toLocaleDateString("en-CA", {
-    timeZone: "America/New_York",
-  });
+  return dateToDatestring(latestMonday);
 };
 
 export const getCurrentAndSurroundingWeeks = () => {
@@ -95,20 +105,17 @@ export const getNextWeek = (weekDate: string) => {
 };
 
 export const addDaysToDate = (dateString: string, nDays: number) => {
-  const date = new Date(dateString + "T00:00:00"); // Add time to avoid timezone issues
+  const date = datestringToDate(dateString);
 
   // Add/subtract days
   date.setDate(date.getDate() + nDays);
 
   // Format back to YYYY-MM-DD in NYC timezone
-  return date.toLocaleDateString("en-CA", {
-    timeZone: "America/New_York",
-  });
+  return dateToDatestring(date);
 };
 
 export const isSunday = () => {
-  const nowInNYC = getTodayDate();
-  const nycDate = new Date(nowInNYC);
+  const nycDate = getTodayDateEST();
   return nycDate.getDay() === 0;
 };
 
@@ -128,3 +135,48 @@ export const getAllRoutesStillCompeting = (matches: Match[]): RouteId[] => {
   const allRoutes = new Set(Object.values(RouteId));
   return Array.from(allRoutes.difference(losers));
 };
+
+export const isBracketFinished = (matches: Match[]): boolean =>
+  Boolean(
+    matches.find((match) => match.matchId === `${NUM_MATCHES}`)?.matchData
+      .matchResult
+  );
+
+export const getRoundToShowForWeek = (weekString: string): number => {
+  const todayDateEst = getTodayDateEST();
+  const firstDayOfWeekEst = datestringToDate(weekString);
+  const daysAfterFirstDayOfWeek = differenceInCalendarDays(
+    todayDateEst,
+    firstDayOfWeekEst
+  );
+  return Math.min(Math.max(daysAfterFirstDayOfWeek, 0), 4);
+};
+
+export const getWeekNumber = (weekString: string): number => {
+  const weekStringDate = datestringToDate(weekString);
+  const firstWeekStringDate = datestringToDate(FIRST_WEEK_DATE);
+  const daysAfterFirstDayOfWeek = differenceInCalendarDays(
+    weekStringDate,
+    firstWeekStringDate
+  );
+  return Math.max(Math.floor(daysAfterFirstDayOfWeek / 7), 0) + 1;
+};
+
+export const getLastMatchDayInBracket = (weekString: string): Date => {
+  return datestringToDate(addDaysToDate(weekString, 4));
+};
+
+export const formatDateShort = (date: Date) => {
+  return new Intl.DateTimeFormat("en-US", {
+    timeZone: "America/New_York",
+    month: "short",
+    day: "numeric",
+  }).format(date);
+};
+
+export const formatDatestringShort = (ds: string) => {
+  return formatDateShort(datestringToDate(ds));
+};
+
+export const matchesHaveWeek = (matches: Match[], weekString: string) =>
+  matches.some((match) => match.bracketId === weekString);

@@ -1,47 +1,60 @@
-import { RouteId } from "../interfaces";
-import { combineClasses } from "../util";
+import { Match } from "../interfaces";
+import {
+  combineClasses,
+  getNextWeek,
+  getPreviousWeek,
+  matchesHaveWeek,
+} from "../util";
 import styles from "./../../page.module.css";
-import ServiceBullet from "./ServiceBullet";
 
 interface WeekSelectorProps {
-  currentWeek: string;
-  previousWeek?: string;
-  nextWeek?: string;
-  setCurrentWeek: (w: string) => void;
-  routes: RouteId[];
+  matches: Match[];
+  selectedWeek: string;
+  setSelectedWeek: (s: string) => void;
 }
 
+const maybeWrapInButton = (
+  node: React.ReactElement,
+  callback: () => void,
+  wrap: boolean
+) => {
+  return wrap ? <button onClick={callback}>{node}</button> : node;
+};
+
 export default function WeekSelector(props: WeekSelectorProps) {
-  const numRows = props.routes.length > 4 ? 2 : 1;
-  const numColumns = Math.ceil(props.routes.length / numRows);
+  const lastWeek = getPreviousWeek(props.selectedWeek);
+  const nextWeek = getNextWeek(props.selectedWeek);
+  const hasLastWeek = matchesHaveWeek(props.matches, lastWeek);
+  const hasNextWeek = matchesHaveWeek(props.matches, nextWeek);
 
   return (
-    <div className={styles.weekSelectorOuterContainer}>
-      <div className={styles.currentWeekContainer}>
-        <div className={styles.currentWeekContainerLeftSide}>
-          <div className={styles.weekNumberContainer}>Week 12</div>
-          <div className={styles.weekRangeContainer}>
-            <p>Sep 15 &ndash; Sep 19</p>
-            <p>Mon to Fri, 5 PM to 8 PM</p>
-          </div>
+    <div className={styles.weekSelectorInnerContainer}>
+      <div className={styles.weekSelectorContainer}>
+        <div
+          className={combineClasses(
+            styles.weekSelectorButton,
+            !hasLastWeek && styles.disabled
+          )}
+        >
+          {maybeWrapInButton(
+            <>← Last week</>,
+            () => props.setSelectedWeek(lastWeek),
+            hasLastWeek
+          )}
         </div>
-        <div className={styles.currentWeekContainerRightSide}>
-          <div
-            className={combineClasses(
-              styles.routesGrid,
-              numRows === 2 && styles.twoRows
-            )}
-            style={{
-              gridTemplateRows: `repeat(${numRows}, 1fr)`,
-              gridTemplateColumns: `repeat(${numColumns}, 1fr)`,
-            }}
-          >
-            {props.routes.map((route) => (
-              <div className={styles.hudServiceBulletContainer} key={route}>
-                <ServiceBullet routeId={route} />
-              </div>
-            ))}
-          </div>
+      </div>
+      <div className={styles.weekSelectorContainer}>
+        <div
+          className={combineClasses(
+            styles.weekSelectorButton,
+            !hasNextWeek && styles.disabled
+          )}
+        >
+          {maybeWrapInButton(
+            <>Next week →</>,
+            () => props.setSelectedWeek(nextWeek),
+            hasNextWeek
+          )}
         </div>
       </div>
     </div>

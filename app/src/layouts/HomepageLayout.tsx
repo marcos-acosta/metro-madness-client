@@ -3,13 +3,19 @@
 import { useState } from "react";
 import { Match, RouteId } from "../interfaces";
 import styles from "./../../page.module.css";
-import { getAllRoutesStillCompeting, getCurrentWeek, isSunday } from "../util";
+import {
+  getAllRoutesStillCompeting,
+  getCurrentWeek,
+  getRoundToShowForWeek,
+} from "../util";
 import Header from "../components/Header";
-import WeekSelector from "../components/WeekSelector";
+import WeekHeader from "../components/WeekHeader";
 import MatchesDashboard from "../components/MatchesDashboard";
 import Bracket from "../components/Bracket";
 import Footer from "../components/Footer";
-import { NUM_MATCHES } from "../constants";
+import SectionHeader from "../components/SectionHeader";
+import { ROUND_NAMES } from "../constants";
+import WeekSelector from "../components/WeekSelector";
 
 interface HomepageLayoutProps {
   initialMatches: Match[];
@@ -27,23 +33,40 @@ export default function HomepageLayout(props: HomepageLayoutProps) {
     matchesForSelectedWeek
   );
 
+  const roundToShow = getRoundToShowForWeek(selectedWeek);
+  const dashboardHeaderText = ROUND_NAMES[roundToShow];
+
   return (
     <div className={styles.pageInnerContainer}>
       <div className={styles.headerOuterContainer}>
         <Header />
       </div>
-      <div className={styles.weekSelectorOuterContainer}>
-        <WeekSelector
-          currentWeek={selectedWeek}
-          setCurrentWeek={setSelectedWeek}
+      <div className={styles.weekHeaderOuterContainer}>
+        <WeekHeader
           routes={routesToShowInHeader}
+          weekStringDate={selectedWeek}
         />
       </div>
-      <div className={styles.matchesDashboardOuterContainer}>
-        <MatchesDashboard matches={matchesForSelectedWeek} />
-      </div>
-      <div className={styles.bracketOuterContainer}>
-        <Bracket matches={matchesForSelectedWeek} />
+      <div className={styles.whiteBg}>
+        <div className={styles.weekSelectorOuterContainer}>
+          <WeekSelector
+            matches={storedMatches}
+            selectedWeek={selectedWeek}
+            setSelectedWeek={setSelectedWeek}
+          />
+        </div>
+        <div className={styles.sectionHeaderOuterContainer}>
+          <SectionHeader text={dashboardHeaderText} />
+        </div>
+        <div className={styles.matchesDashboardOuterContainer}>
+          <MatchesDashboard matches={matchesForSelectedWeek} />
+        </div>
+        <div className={styles.sectionHeaderOuterContainer}>
+          <SectionHeader text={"Bracket"} />
+        </div>
+        <div className={styles.bracketOuterContainer}>
+          <Bracket matches={matchesForSelectedWeek} />
+        </div>
       </div>
       <div className={styles.footerOuterContainer}>
         <Footer />
