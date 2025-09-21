@@ -27,8 +27,9 @@
   display: flex;
   flex-direction: row;
   align-items: center;
-  padding-left: 2px;
+  padding-left: 4px;
   gap: 5px;
+  height: 30px;
 }
 
 .bracketRouteContainer:last-child {
@@ -57,9 +58,9 @@
 }
 
 .bracketMatchBullet {
-  height: 25px;
   width: unset;
-  aspect-ratio: 1 / 1;
+  height: 80%;
+  object-fit: contain;
 }
 
 .bracketMatchBulletTbd {
@@ -110,10 +111,6 @@
 }
 
 .headerInnerContainer {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 10px;
   width: 100%;
 }
 
@@ -123,39 +120,12 @@
   color: var(--theme-white);
   background: var(--theme-black);
   width: 100%;
-  border-radius: 10px;
+  padding: 18px 18px 35px 18px;
 }
 
-.headerHorizontalBar {
-  width: 100%;
-  height: 20px;
-  border-bottom: 5px solid var(--theme-white);
-}
-
-.headerContentContainer {
-  padding: 20px 20px;
-  display: flex;
-  flex-direction: row;
-}
-
-.headerLogoContainer {
-  display: flex;
-  flex-direction: row;
-  width: 100%;
-  align-items: center;
+.headerTitleContainer {
   font-size: 40px;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-.headerSideContainer {
-  width: 300px;
-  display: flex;
-  justify-content: flex-end;
-}
-
-.aboutText {
-  cursor: pointer;
+  font-weight:bold;
 }
 
 .aboutText:hover {
@@ -164,29 +134,57 @@
 
 .currentWeekContainer {
   display: flex;
+  flex-direction: row;
+}
+
+.currentWeekContainerLeftSide {
+  display: flex;
   flex-direction: column;
-  width: fit-content;
+  padding-left: 18px;
+  flex-grow: 1;
 }
 
 .weekNumberContainer {
   font-weight: bold;
-  font-size: 60px;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
+  font-size: 75px;
+  flex-grow: 1;
 }
 
 .weekRangeContainer {
-  font-size: 18px;
-  font-style: italic;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
+  font-size: 30px;
+  font-weight: bold;
+  flex-shrink: 1;
+}
+
+.currentWeekContainerRightSide {
+  height: 175px;
+  padding-right: 20px;
 }
 
 .weekSelectorOuterContainer {
-  margin-top: 10px;
+  margin-top: 15px;
   width: 100%;
+}
+
+.routesGrid {
+  display: grid;
+  --grid-size: 175px;
+  height: var(--grid-size);
+}
+
+.hudServiceBulletContainer {
   display: flex;
+  align-items: center;
   justify-content: center;
+  width: var(--grid-size);
+  height: var(--grid-size);
+}
+
+.twoRows .hudServiceBulletContainer {
+  width: calc(var(--grid-size) / 2);
+  height: calc(var(--grid-size) / 2);
+}
+
+.hudServiceBulletContainer .bracketMatchBullet {
+  height: 100%;
 }

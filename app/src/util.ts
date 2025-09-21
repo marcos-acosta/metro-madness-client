@@ -1,4 +1,4 @@
-import { RouteId } from "./interfaces";
+import { Match, MatchData, RouteId } from "./interfaces";
 
 export const combineClasses = (
   ...classnames: (string | undefined | false | null)[]
@@ -59,11 +59,15 @@ export const getNameFromRouteId = (routeId: RouteId) => {
   }
 };
 
-export const getCurrentWeek = () => {
+export const getTodayDate = () => {
   // Get current date in NYC timezone
-  const nowInNYC = new Date().toLocaleString("en-US", {
+  return new Date().toLocaleString("en-US", {
     timeZone: "America/New_York",
   });
+};
+
+export const getCurrentWeek = () => {
+  const nowInNYC = getTodayDate();
   const nycDate = new Date(nowInNYC);
 
   const dayOfWeek = nycDate.getDay(); // 0 = Sunday, 1 = Monday, etc.
@@ -100,4 +104,27 @@ export const addDaysToDate = (dateString: string, nDays: number) => {
   return date.toLocaleDateString("en-CA", {
     timeZone: "America/New_York",
   });
+};
+
+export const isSunday = () => {
+  const nowInNYC = getTodayDate();
+  const nycDate = new Date(nowInNYC);
+  return nycDate.getDay() === 0;
+};
+
+const getLosingRoute = (matchData: MatchData): RouteId | undefined => {
+  if (matchData.matchResult) {
+    const winner = matchData.matchResult.winner;
+    return matchData.competingTrips.find(
+      (trip) => trip.routeId && trip.routeId !== winner
+    )?.routeId;
+  }
+};
+
+export const getAllRoutesStillCompeting = (matches: Match[]): RouteId[] => {
+  const losers = new Set(
+    matches.map((match) => getLosingRoute(match.matchData)).flat() as RouteId[]
+  );
+  const allRoutes = new Set(Object.values(RouteId));
+  return Array.from(allRoutes.difference(losers));
 };

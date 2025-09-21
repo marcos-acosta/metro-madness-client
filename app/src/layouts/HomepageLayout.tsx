@@ -1,14 +1,15 @@
 "use client";
 
 import { useState } from "react";
-import { Match } from "../interfaces";
+import { Match, RouteId } from "../interfaces";
 import styles from "./../../page.module.css";
-import { getCurrentWeek } from "../util";
+import { getAllRoutesStillCompeting, getCurrentWeek, isSunday } from "../util";
 import Header from "../components/Header";
 import WeekSelector from "../components/WeekSelector";
 import MatchesDashboard from "../components/MatchesDashboard";
 import Bracket from "../components/Bracket";
 import Footer from "../components/Footer";
+import { NUM_MATCHES } from "../constants";
 
 interface HomepageLayoutProps {
   initialMatches: Match[];
@@ -16,10 +17,14 @@ interface HomepageLayoutProps {
 
 export default function HomepageLayout(props: HomepageLayoutProps) {
   const [storedMatches, setStoredMatches] = useState(props.initialMatches);
-  const [currentWeek, setCurrentWeek] = useState(getCurrentWeek());
+  const [selectedWeek, setSelectedWeek] = useState(getCurrentWeek());
 
-  const matchesForThisWeek = storedMatches.filter(
-    (match) => match.bracketId === currentWeek
+  const matchesForSelectedWeek = storedMatches.filter(
+    (match) => match.bracketId === selectedWeek
+  );
+
+  const routesToShowInHeader = getAllRoutesStillCompeting(
+    matchesForSelectedWeek
   );
 
   return (
@@ -29,15 +34,16 @@ export default function HomepageLayout(props: HomepageLayoutProps) {
       </div>
       <div className={styles.weekSelectorOuterContainer}>
         <WeekSelector
-          currentWeek={currentWeek}
-          setCurrentWeek={setCurrentWeek}
+          currentWeek={selectedWeek}
+          setCurrentWeek={setSelectedWeek}
+          routes={routesToShowInHeader}
         />
       </div>
       <div className={styles.matchesDashboardOuterContainer}>
-        <MatchesDashboard matches={matchesForThisWeek} />
+        <MatchesDashboard matches={matchesForSelectedWeek} />
       </div>
       <div className={styles.bracketOuterContainer}>
-        <Bracket matches={matchesForThisWeek} />
+        <Bracket matches={matchesForSelectedWeek} />
       </div>
       <div className={styles.footerOuterContainer}>
         <Footer />
