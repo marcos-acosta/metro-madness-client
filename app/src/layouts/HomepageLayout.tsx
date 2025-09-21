@@ -8,6 +8,7 @@ import {
   getCurrentWeek,
   getMatchesInRound,
   getRoundToShowForWeek,
+  hasBothCompetitors,
 } from "../util";
 import Header from "../components/Header";
 import WeekHeader from "../components/WeekHeader";
@@ -38,7 +39,7 @@ export default function HomepageLayout(props: HomepageLayoutProps) {
   const matchesInRoundToShow = getMatchesInRound(
     matchesForSelectedWeek,
     roundToShow
-  );
+  ).filter(hasBothCompetitors);
 
   return (
     <div className={styles.pageInnerContainer}>

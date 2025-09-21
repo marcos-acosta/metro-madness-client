@@ -1,3 +1,15 @@
+export enum TrunkLine {
+  EIGHTH_AVE,
+  SIXTH_AVE,
+  CROSSTOWN,
+  CANARSIE,
+  NASSAU,
+  BROADWAY,
+  SEVENTH_AVE,
+  LEXINGTON,
+  FLUSHING,
+}
+
 export enum RouteId {
   ROUTE_A = "A",
   ROUTE_C = "C",

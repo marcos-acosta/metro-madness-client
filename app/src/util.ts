@@ -1,5 +1,10 @@
-import { FIRST_WEEK_DATE, NUM_MATCHES } from "./constants";
-import { Match, MatchData, RouteId } from "./interfaces";
+import {
+  COLORS,
+  FIRST_WEEK_DATE,
+  NUM_MATCHES,
+  ROUTE_ID_TO_TRUNK_LINE,
+} from "./constants";
+import { Match, MatchData, RouteId, TripData } from "./interfaces";
 import { differenceInCalendarDays, parseISO, startOfDay } from "date-fns";
 import { toZonedTime, fromZonedTime } from "date-fns-tz";
 
@@ -198,3 +203,30 @@ export const matchIdToRoundNumber = (matchId: string) => {
 
 export const getMatchesInRound = (matches: Match[], round: number) =>
   matches.filter((match) => matchIdToRoundNumber(match.matchId) === round);
+
+export const getColorFromRouteId = (routeId: RouteId) =>
+  COLORS[ROUTE_ID_TO_TRUNK_LINE[routeId]];
+
+export const hasBothCompetitors = (match: Match) =>
+  match.matchData.competingTrips.find((trip) => trip.routeId === undefined) ===
+  undefined;
+
+export const formatDelay = (delaySeconds: number) => {
+  const delaySecondsAbs = Math.abs(delaySeconds);
+  let seconds;
+  let minutes;
+  if (delaySecondsAbs < 60) {
+    minutes = 0;
+    seconds = delaySecondsAbs;
+  } else {
+    minutes = Math.floor(delaySecondsAbs / 60);
+    seconds = delaySecondsAbs % 60;
+  }
+  const secondsFormatted = `${seconds}`.padStart(2, "0");
+  return `${minutes}m${secondsFormatted}s`;
+};
+
+export const getLatestDelayTime = (trip: TripData) =>
+  trip.stops
+    ? trip.stops.toReversed().find((stop) => stop.delay !== undefined)?.delay
+    : undefined;

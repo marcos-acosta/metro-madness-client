@@ -1,6 +1,7 @@
 :root {
   --theme-white: #ffffff;
   --theme-black: #171717;
+  --theme-light-gray: rgb(195, 195, 195);
   --theme-med-gray: rgb(142, 142, 142);
   --theme-dark-gray: rgb(72, 72, 72);
   --theme-sand: rgb(216, 204, 174);

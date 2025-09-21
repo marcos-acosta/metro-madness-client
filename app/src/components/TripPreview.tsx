@@ -1,10 +1,17 @@
 import { TripData, TripStatus } from "../interfaces";
-import { getNameFromRouteId } from "../util";
+import {
+  combineClasses,
+  formatDelay,
+  getLatestDelayTime,
+  getNameFromRouteId,
+} from "../util";
 import styles from "./../../page.module.css";
+import ProgressBar from "./ProgressBar";
 import ServiceBullet from "./ServiceBullet";
 
 interface TripPreviewProps {
   tripData: TripData;
+  numStops?: number;
 }
 
 const TRIP_STATUS_TO_TEXT = {
@@ -19,9 +26,15 @@ const TRIP_STATUS_TO_TEXT = {
 
 export default function TripPreview(props: TripPreviewProps) {
   const tripStatusText = TRIP_STATUS_TO_TEXT[props.tripData.tripStatus!];
+  const latestDelayTime =
+    props.tripData.finalDelay || getLatestDelayTime(props.tripData);
+  const isBehind = latestDelayTime && latestDelayTime > 0;
+  const isAhead = latestDelayTime && latestDelayTime < 0;
+  const delayTimeString = latestDelayTime ? formatDelay(latestDelayTime) : "--";
+  const isFinal = props.tripData.finalDelay !== undefined;
 
   return (
-    <div className={styles.tripPreviewInnerContainer}>
+    <>
       <div className={styles.routeIdContainer}>
         <ServiceBullet routeId={props.tripData.routeId!} />
       </div>
@@ -31,6 +44,22 @@ export default function TripPreview(props: TripPreviewProps) {
         </div>
         <div className={styles.serviceStatusContainer}>{tripStatusText}</div>
       </div>
-    </div>
+      <div className={styles.progressContainer}>
+        <ProgressBar tripData={props.tripData} numStops={props.numStops} />
+      </div>
+      <div
+        className={combineClasses(
+          styles.delayContainer,
+          isFinal && styles.isFinalTime
+        )}
+      >
+        <div className={styles.delayTimeContainer}>{delayTimeString}</div>
+        {latestDelayTime && (
+          <div className={styles.delayTimeText}>
+            {isAhead ? "Ahead" : isBehind ? "Behind" : "On time"}
+          </div>
+        )}
+      </div>
+    </>
   );
 }

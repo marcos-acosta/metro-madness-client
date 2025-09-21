@@ -27,7 +27,11 @@ export default function MatchPreview(props: MatchPreviewProps) {
       <div className={styles.matchPreviewWhiteLine} />
       <div className={styles.matchPreviewLinesContainer}>
         {props.match.matchData.competingTrips.map((trip) => (
-          <TripPreview key={trip.routeId} tripData={trip} />
+          <TripPreview
+            key={trip.routeId}
+            tripData={trip}
+            numStops={props.match.matchData.numStopsToFinish}
+          />
         ))}
       </div>
     </div>

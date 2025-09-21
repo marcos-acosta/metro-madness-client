@@ -306,9 +306,11 @@
 }
 
 .matchPreviewLinesContainer {
-  display: flex;
-  flex-direction: column;
-  padding: 5px 0 5px 0;
+  padding: 5px 15px 5px 3px;
+  display: grid;
+  grid-template-columns: 60px auto auto auto;
+  grid-template-rows: 60px 60px;
+  gap: 5px;
 }
 
 .tripPreviewInnerContainer {
@@ -336,7 +338,6 @@
   display: flex;
   flex-direction: column;
   padding-top: 8px;
-  margin-left: 5px;
   gap: 3px;
 }
 
@@ -347,4 +348,87 @@
 
 .serviceStatusContainer {
   color: var(--theme-med-gray);
+}
+
+.progressContainer {
+  width: 250px;
+}
+
+.progressBarInnerContainer {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 0 10px 0 10px;
+}
+
+.underlyingLineContainer {
+  width: 100%;
+  height: 10%;
+  background-color: var(--theme-med-gray);
+  border-radius: 100vh;
+  position: relative;
+}
+
+.underlyingLineContainer.started {
+  background-color: var(--theme-white);
+}
+
+.progressGrid {
+  display: grid;
+  grid-template-rows: 1fr;
+  width: 100%;
+  height: 100%;
+}
+
+.progressBarSegmentInnerContainer {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  overflow: visible;
+}
+
+.stopCircle {
+  height: 100%;
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
+  background-color: var(--theme-white);
+  outline: 3px solid var(--theme-black);
+  z-index: 1;
+}
+
+.firstStopContainer .stopCircle {
+  position: absolute;
+  transform: translateX(-50%)
+}
+
+.secondStopContainer .stopCircle {
+  position: absolute;
+  right: 0;
+  transform: translateX(50%)
+}
+
+.delayContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: var(--theme-white);
+  margin-left: 5px;
+}
+
+.delayTimeContainer {
+  font-size: 22px;
+}
+
+.isFinalTime .delayTimeContainer {
+  font-weight: bold;
+}
+
+.delayTimeText {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  text-transform: lowercase;
 }
