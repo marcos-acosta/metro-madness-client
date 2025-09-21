@@ -37,7 +37,7 @@ export default function WeekSelector(props: WeekSelectorProps) {
           )}
         >
           {maybeWrapInButton(
-            <>← Last week</>,
+            <>← Prev week</>,
             () => props.setSelectedWeek(lastWeek),
             hasLastWeek
           )}

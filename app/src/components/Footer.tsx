@@ -15,8 +15,8 @@ export default function Footer() {
         depart from either Harlem 148 St or New Lots Av. The &quot;finish
         line&quot; is a number of stops, which will be the same for both
         competing trains. The train which is the <i>least delayed</i> after
-        passing that many stops wins and proceeds to the next round. This
-        project was made with 🚇 by{" "}
+        passing that many stops wins that game and its service proceeds to the
+        next round. This project was made with 🚇 by{" "}
         <a
           href="https://marcos.ac"
           target="_blank"
