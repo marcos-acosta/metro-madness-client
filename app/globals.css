@@ -3,6 +3,7 @@
   --theme-black: #171717;
   --theme-med-gray: rgb(142, 142, 142);
   --theme-dark-gray: rgb(72, 72, 72);
+  --theme-sand: rgb(216, 204, 174);
 }
 
 html,
@@ -12,8 +13,8 @@ body {
 }
 
 body {
-  color: var(--theme-white);
-  background: var(--theme-black);
+  color: var(--theme-black);
+  background-color: var(--theme-sand);
   font-family: Helvetica, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

@@ -8,5 +8,14 @@ interface WeekSelectorProps {
 }
 
 export default function WeekSelector(props: WeekSelectorProps) {
-  return <div>Week selector placeholder</div>;
+  return (
+    <div className={styles.weekSelectorOuterContainer}>
+      <div className={styles.currentWeekContainer}>
+        <div className={styles.weekNumberContainer}>Week 12</div>
+        <div className={styles.weekRangeContainer}>
+          Sept 15, 2025 &mdash; Sept 19, 2025
+        </div>
+      </div>
+    </div>
+  );
 }
