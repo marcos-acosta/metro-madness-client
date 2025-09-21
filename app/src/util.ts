@@ -58,3 +58,46 @@ export const getNameFromRouteId = (routeId: RouteId) => {
       return "Unknown route";
   }
 };
+
+export const getCurrentWeek = () => {
+  // Get current date in NYC timezone
+  const nowInNYC = new Date().toLocaleString("en-US", {
+    timeZone: "America/New_York",
+  });
+  const nycDate = new Date(nowInNYC);
+
+  const dayOfWeek = nycDate.getDay(); // 0 = Sunday, 1 = Monday, etc.
+  const daysBack = dayOfWeek === 1 ? 0 : dayOfWeek === 0 ? 6 : dayOfWeek - 1;
+
+  const latestMonday = new Date(nycDate);
+  latestMonday.setDate(nycDate.getDate() - daysBack);
+
+  return latestMonday.toLocaleDateString("en-CA", {
+    timeZone: "America/New_York",
+  });
+};
+
+export const getCurrentAndSurroundingWeeks = () => {
+  const currentWeek = getCurrentWeek();
+  return [getPreviousWeek(currentWeek), currentWeek, getNextWeek(currentWeek)];
+};
+
+export const getPreviousWeek = (weekDate: string) => {
+  return addDaysToDate(weekDate, -7);
+};
+
+export const getNextWeek = (weekDate: string) => {
+  return addDaysToDate(weekDate, 7);
+};
+
+export const addDaysToDate = (dateString: string, nDays: number) => {
+  const date = new Date(dateString + "T00:00:00"); // Add time to avoid timezone issues
+
+  // Add/subtract days
+  date.setDate(date.getDate() + nDays);
+
+  // Format back to YYYY-MM-DD in NYC timezone
+  return date.toLocaleDateString("en-CA", {
+    timeZone: "America/New_York",
+  });
+};

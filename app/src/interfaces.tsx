@@ -81,3 +81,7 @@ export interface Match {
   matchId: string;
   matchData: MatchData;
 }
+
+export interface GetMatchesResponse {
+  matches: Match[];
+}
