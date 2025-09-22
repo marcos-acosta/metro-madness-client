@@ -17,6 +17,7 @@ import Bracket from "../components/Bracket";
 import Footer from "../components/Footer";
 import SectionHeader from "../components/SectionHeader";
 import WeekSelector from "../components/WeekSelector";
+import { ROUND_NAMES } from "../constants";
 
 interface HomepageLayoutProps {
   initialMatches: Match[];
@@ -35,6 +36,7 @@ export default function HomepageLayout(props: HomepageLayoutProps) {
   );
 
   const roundToShow = getRoundToShowForWeek(selectedWeek);
+  const roundName = ROUND_NAMES[roundToShow];
 
   const matchesInRoundToShow = getMatchesInRound(
     matchesForSelectedWeek,
@@ -54,7 +56,7 @@ export default function HomepageLayout(props: HomepageLayoutProps) {
       </div>
       <div className={styles.whiteBg}>
         <div className={styles.sectionHeaderOuterContainer}>
-          <SectionHeader text={"Live results"} />
+          <SectionHeader text={`Live results: ${roundName}`} />
         </div>
         <div className={styles.matchesDashboardOuterContainer}>
           <MatchesDashboard matches={matchesInRoundToShow} />

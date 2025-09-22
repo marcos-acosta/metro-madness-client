@@ -12,6 +12,8 @@ import ServiceBullet from "./ServiceBullet";
 interface TripPreviewProps {
   tripData: TripData;
   numStops?: number;
+  isLoser?: boolean;
+  row: number;
 }
 
 const TRIP_STATUS_TO_TEXT = {
@@ -35,16 +37,19 @@ export default function TripPreview(props: TripPreviewProps) {
 
   return (
     <>
-      <div className={styles.routeIdContainer}>
+      <div className={styles.routeIdContainer} style={{ gridRow: props.row }}>
         <ServiceBullet routeId={props.tripData.routeId!} />
       </div>
-      <div className={styles.serviceNameAndStatusContainer}>
+      <div
+        className={styles.serviceNameAndStatusContainer}
+        style={{ gridRow: props.row }}
+      >
         <div className={styles.serviceNameContainer}>
           {getNameFromRouteId(props.tripData.routeId!)}
         </div>
         <div className={styles.serviceStatusContainer}>{tripStatusText}</div>
       </div>
-      <div className={styles.progressContainer}>
+      <div className={styles.progressContainer} style={{ gridRow: props.row }}>
         <ProgressBar tripData={props.tripData} numStops={props.numStops} />
       </div>
       <div
@@ -52,6 +57,7 @@ export default function TripPreview(props: TripPreviewProps) {
           styles.delayContainer,
           isFinal && styles.isFinalTime
         )}
+        style={{ gridRow: props.row }}
       >
         <div className={styles.delayTimeContainer}>{delayTimeString}</div>
         {latestDelayTime && (

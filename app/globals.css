@@ -5,6 +5,7 @@
   --theme-med-gray: rgb(142, 142, 142);
   --theme-dark-gray: rgb(72, 72, 72);
   --theme-sand: rgb(216, 204, 174);
+  --theme-fade: rgba(67, 67, 67, 0.402);
 }
 
 html,

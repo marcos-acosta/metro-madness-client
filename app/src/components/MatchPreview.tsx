@@ -17,6 +17,10 @@ const matchStatusToText = {
 export default function MatchPreview(props: MatchPreviewProps) {
   const matchStatus = matchStatusToText[props.match.matchData.matchStatus];
   const roundName = ROUND_NAMES[matchIdToRoundNumber(props.match.matchId)];
+  const winner = props.match.matchData.matchResult?.winner;
+  const loserRow =
+    winner &&
+    (props.match.matchData.competingTrips[0].routeId === winner ? 2 : 1);
 
   return (
     <div className={styles.matchPreviewInnerContainer}>
@@ -26,13 +30,20 @@ export default function MatchPreview(props: MatchPreviewProps) {
       </div>
       <div className={styles.matchPreviewWhiteLine} />
       <div className={styles.matchPreviewLinesContainer}>
-        {props.match.matchData.competingTrips.map((trip) => (
+        {props.match.matchData.competingTrips.map((trip, i) => (
           <TripPreview
             key={trip.routeId}
             tripData={trip}
             numStops={props.match.matchData.numStopsToFinish}
+            row={i + 1}
           />
         ))}
+        {winner && (
+          <div
+            className={styles.previewLoserShader}
+            style={{ gridRow: `${loserRow}` }}
+          />
+        )}
       </div>
     </div>
   );
