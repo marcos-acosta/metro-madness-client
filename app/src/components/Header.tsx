@@ -1,9 +1,7 @@
 import Link from "next/link";
 import styles from "./../../page.module.css";
 
-interface HeaderProps {}
-
-export default function Header(props: HeaderProps) {
+export default function Header() {
   return (
     <div className={styles.headerInnerContainer}>
       <div className={styles.headerBackplate}>
