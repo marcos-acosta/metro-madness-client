@@ -142,7 +142,8 @@ export default function Bracket(props: BracketProps) {
       MATCH_HEIGHT_PX / 2,
   };
 
-  const TOTAL_BRACKET_HEIGHT = MATCH_VERTICAL_OFFSETS["6"] + MATCH_HEIGHT_PX;
+  const TOTAL_BRACKET_HEIGHT =
+    MATCH_VERTICAL_OFFSETS["6"] + MATCH_HEIGHT_PX + 50;
 
   return (
     <div

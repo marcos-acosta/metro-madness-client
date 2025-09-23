@@ -1,6 +1,8 @@
 import {
   COLORS,
   FIRST_WEEK_DATE,
+  HOUR_5PM_IN_MINUTES,
+  HOUR_805PM_IN_MINUTES,
   NUM_MATCHES,
   ROUTE_ID_TO_TRUNK_LINE,
 } from "./constants";
@@ -223,10 +225,30 @@ export const formatDelay = (delaySeconds: number) => {
     seconds = delaySecondsAbs % 60;
   }
   const secondsFormatted = `${seconds}`.padStart(2, "0");
-  return `${minutes}m${secondsFormatted}s`;
+  return minutes > 0 ? `${minutes}m${secondsFormatted}s` : `${seconds}s`;
 };
 
 export const getLatestDelayTime = (trip: TripData) =>
   trip.stops
     ? trip.stops.toReversed().find((stop) => stop.delay !== undefined)?.delay
     : undefined;
+
+export const isGameTime = () => {
+  const now = new Date();
+  const nycTime = toZonedTime(now, "America/New_York");
+  const hour = nycTime.getHours();
+  const minutes = nycTime.getMinutes();
+  const totalMinutes = hour * 60 + minutes;
+  return (
+    totalMinutes >= HOUR_5PM_IN_MINUTES && totalMinutes <= HOUR_805PM_IN_MINUTES
+  );
+};
+
+const _encodeMatchToKey = (match: Match) =>
+  `${match.bracketId}:${match.matchId}`;
+
+export const matchesToCacheFormat = (matches: Match[]) => {
+  return Object.fromEntries(
+    matches.map((match) => [_encodeMatchToKey(match), match])
+  );
+};

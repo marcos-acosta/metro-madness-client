@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Match } from "../interfaces";
 import styles from "./../../page.module.css";
 import {
@@ -9,6 +9,8 @@ import {
   getMatchesInRound,
   getRoundToShowForWeek,
   hasBothCompetitors,
+  isGameTime,
+  matchesToCacheFormat,
 } from "../util";
 import Header from "../components/Header";
 import WeekHeader from "../components/WeekHeader";
@@ -18,16 +20,20 @@ import Footer from "../components/Footer";
 import SectionHeader from "../components/SectionHeader";
 import WeekSelector from "../components/WeekSelector";
 import { ROUND_NAMES } from "../constants";
+import { fetchBracketForWeek } from "../server";
 
 interface HomepageLayoutProps {
   initialMatches: Match[];
 }
 
 export default function HomepageLayout(props: HomepageLayoutProps) {
-  const [storedMatches, setStoredMatches] = useState(props.initialMatches);
+  const [storedMatches, setStoredMatches] = useState<Record<string, Match>>(
+    matchesToCacheFormat(props.initialMatches)
+  );
   const [selectedWeek, setSelectedWeek] = useState(getCurrentWeek());
+  const [lastUpdatedTime, setLastUpdatedTime] = useState<Date>(new Date());
 
-  const matchesForSelectedWeek = storedMatches.filter(
+  const matchesForSelectedWeek = Object.values(storedMatches).filter(
     (match) => match.bracketId === selectedWeek
   );
 
@@ -42,6 +48,24 @@ export default function HomepageLayout(props: HomepageLayoutProps) {
     matchesForSelectedWeek,
     roundToShow
   ).filter(hasBothCompetitors);
+
+  const update = async () => {
+    if (isGameTime()) {
+      const bracketsForWeek = await fetchBracketForWeek(selectedWeek);
+      setStoredMatches((currentMatches) => ({
+        ...currentMatches,
+        ...matchesToCacheFormat(bracketsForWeek.matches),
+      }));
+      setLastUpdatedTime(new Date());
+    }
+  };
+
+  useEffect(() => {
+    const interval = setInterval(update, 60 * 1000);
+    return () => {
+      clearInterval(interval);
+    };
+  }, []);
 
   return (
     <div className={styles.pageInnerContainer}>
@@ -69,7 +93,7 @@ export default function HomepageLayout(props: HomepageLayoutProps) {
         </div>
         <div className={styles.weekSelectorOuterContainer}>
           <WeekSelector
-            matches={storedMatches}
+            matches={Object.values(storedMatches)}
             selectedWeek={selectedWeek}
             setSelectedWeek={setSelectedWeek}
           />

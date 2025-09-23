@@ -48,3 +48,6 @@ export const COLORS = {
   [TrunkLine.FLUSHING]: "#9A38A1",
   [TrunkLine.CROSSTOWN]: "#799534",
 };
+
+export const HOUR_5PM_IN_MINUTES = (12 + 5) * 60;
+export const HOUR_805PM_IN_MINUTES = (12 + 8) * 60 + 5;
