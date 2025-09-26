@@ -10,7 +10,7 @@ export default function FullPageMatch(props: FullPageMatchProps) {
   return (
     <div className={styles.fullPageMatchInnerContainer}>
       {props.match.matchData.competingTrips.map((trip) => (
-        <div className={styles.tripHeader}>
+        <div className={styles.tripHeader} key={trip.routeId}>
           <div className={styles.fullPageLineAndDelayContainer}>
             <div className={styles.fullPageLineContainer}>
               <ServiceBullet routeId={trip.routeId!} />
