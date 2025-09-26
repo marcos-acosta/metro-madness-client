@@ -4,8 +4,10 @@ import { useEffect, useState } from "react";
 import { Match } from "../interfaces";
 import styles from "./../../page.module.css";
 import {
+  formatDateShort,
   getAllRoutesStillCompeting,
   getCurrentWeek,
+  getDateForWeekAndRound,
   getMatchesInRound,
   getRoundToShowForWeek,
   hasBothCompetitors,
@@ -21,6 +23,7 @@ import SectionHeader from "../components/SectionHeader";
 import WeekSelector from "../components/WeekSelector";
 import { ROUND_NAMES } from "../constants";
 import { fetchBracketForWeek } from "../server";
+import Navigator from "../components/Navigator";
 
 interface HomepageLayoutProps {
   initialMatches: Match[];
@@ -31,22 +34,26 @@ export default function HomepageLayout(props: HomepageLayoutProps) {
     matchesToCacheFormat(props.initialMatches)
   );
   const [selectedWeek, setSelectedWeek] = useState(getCurrentWeek());
+  const [selectedRound, setSelectedRound] = useState(
+    getRoundToShowForWeek(getCurrentWeek())
+  );
   const [lastUpdatedTime, setLastUpdatedTime] = useState<Date>(new Date());
 
   const matchesForSelectedWeek = Object.values(storedMatches).filter(
     (match) => match.bracketId === selectedWeek
   );
 
+  const dateToShow = getDateForWeekAndRound(selectedWeek, selectedRound);
+
   const routesToShowInHeader = getAllRoutesStillCompeting(
     matchesForSelectedWeek
   );
 
-  const roundToShow = getRoundToShowForWeek(selectedWeek);
-  const roundName = ROUND_NAMES[roundToShow];
+  const roundName = ROUND_NAMES[selectedRound];
 
   const matchesInRoundToShow = getMatchesInRound(
     matchesForSelectedWeek,
-    roundToShow
+    selectedRound
   ).filter(hasBothCompetitors);
 
   const update = async () => {
@@ -80,7 +87,18 @@ export default function HomepageLayout(props: HomepageLayoutProps) {
       </div>
       <div className={styles.whiteBg}>
         <div className={styles.sectionHeaderOuterContainer}>
-          <SectionHeader text={`Live results: ${roundName}`} />
+          <SectionHeader text={`${formatDateShort(dateToShow)}: ${roundName}`}>
+            <Navigator
+              onBack={() => {
+                setSelectedRound(selectedRound - 1);
+              }}
+              onForward={() => {
+                setSelectedRound(selectedRound + 1);
+              }}
+              backDisabled={selectedRound === 0}
+              forwardDisabled={selectedRound === 4}
+            />
+          </SectionHeader>
         </div>
         <div className={styles.matchesDashboardOuterContainer}>
           <MatchesDashboard matches={matchesInRoundToShow} />

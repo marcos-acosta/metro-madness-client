@@ -252,3 +252,7 @@ export const matchesToCacheFormat = (matches: Match[]) => {
     matches.map((match) => [_encodeMatchToKey(match), match])
   );
 };
+
+export const getDateForWeekAndRound = (week: string, round: number): Date => {
+  return datestringToDate(addDaysToDate(week, round));
+};
