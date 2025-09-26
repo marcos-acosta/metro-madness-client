@@ -18,6 +18,7 @@ export default function MatchPreview(props: MatchPreviewProps) {
   const matchStatus = matchStatusToText[props.match.matchData.matchStatus];
   const roundName = ROUND_NAMES[matchIdToRoundNumber(props.match.matchId)];
   const winner = props.match.matchData.matchResult?.winner;
+  const victoryType = props.match.matchData.matchResult?.victoryType;
   const loserRow =
     winner &&
     (props.match.matchData.competingTrips[0].routeId === winner ? 2 : 1);
@@ -36,6 +37,9 @@ export default function MatchPreview(props: MatchPreviewProps) {
             tripData={trip}
             numStops={props.match.matchData.numStopsToFinish}
             row={i + 1}
+            finished={winner !== undefined}
+            won={winner === trip.routeId}
+            victoryType={victoryType}
           />
         ))}
         {winner && (

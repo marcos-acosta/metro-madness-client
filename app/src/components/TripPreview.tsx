@@ -1,4 +1,4 @@
-import { TripData, TripStatus } from "../interfaces";
+import { TripData, TripStatus, VictoryType } from "../interfaces";
 import {
   combineClasses,
   formatDelay,
@@ -12,8 +12,10 @@ import ServiceBullet from "./ServiceBullet";
 interface TripPreviewProps {
   tripData: TripData;
   numStops?: number;
-  isLoser?: boolean;
   row: number;
+  finished?: boolean;
+  won?: boolean;
+  victoryType?: VictoryType;
 }
 
 const TRIP_STATUS_TO_TEXT = {
@@ -30,10 +32,14 @@ export default function TripPreview(props: TripPreviewProps) {
   const tripStatusText = TRIP_STATUS_TO_TEXT[props.tripData.tripStatus!];
   const latestDelayTime =
     props.tripData.finalDelay || getLatestDelayTime(props.tripData);
-  const isBehind = latestDelayTime && latestDelayTime > 0;
-  const isAhead = latestDelayTime && latestDelayTime < 0;
-  const delayTimeString = latestDelayTime ? formatDelay(latestDelayTime) : "--";
+  const isBehind = latestDelayTime !== undefined && latestDelayTime > 0;
+  const isAhead = latestDelayTime !== undefined && latestDelayTime < 0;
+  const delayTimeString =
+    latestDelayTime !== undefined ? formatDelay(latestDelayTime) : "--";
   const isFinal = props.tripData.finalDelay !== undefined;
+  const victoryRequiredCoinToss =
+    props.victoryType === VictoryType.COIN_TOSS_BOTH_DQ ||
+    props.victoryType === VictoryType.COIN_TOSS_SAME_DELAY;
 
   return (
     <>
@@ -47,10 +53,13 @@ export default function TripPreview(props: TripPreviewProps) {
         <div className={styles.serviceNameContainer}>
           {getNameFromRouteId(props.tripData.routeId!)}
         </div>
-        <div className={styles.serviceStatusContainer}>{tripStatusText}</div>
-      </div>
-      <div className={styles.progressContainer} style={{ gridRow: props.row }}>
-        <ProgressBar tripData={props.tripData} numStops={props.numStops} />
+        <div className={styles.serviceStatusContainer}>
+          {tripStatusText}
+          {props.finished &&
+            ` • ${props.won ? "Won" : "Lost"}${
+              victoryRequiredCoinToss ? " coin toss" : ""
+            }`}
+        </div>
       </div>
       <div
         className={combineClasses(
