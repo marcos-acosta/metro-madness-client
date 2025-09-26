@@ -29,7 +29,7 @@
 
 .roundHeaderText {
   font-weight: bold;
-  padding: 5px 5px 3px 5px;
+  padding: 5px;
   border-radius: 5px;
 }
 
@@ -355,6 +355,7 @@
   grid-template-columns: 38px auto auto;
   grid-template-rows: 45px 45px;
   gap: 5px;
+  width: 100%;
 }
 
 .tripPreviewInnerContainer {
