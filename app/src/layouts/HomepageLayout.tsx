@@ -108,7 +108,10 @@ export default function HomepageLayout(props: HomepageLayoutProps) {
           <SectionHeader text={"Bracket"} />
         </div>
         <div className={styles.bracketOuterContainer}>
-          <Bracket matches={matchesForSelectedWeek} />
+          <Bracket
+            matches={matchesForSelectedWeek}
+            selectedRound={selectedRound}
+          />
         </div>
         <div className={styles.weekSelectorOuterContainer}>
           <SeeAllWeeks callback={() => {}} />

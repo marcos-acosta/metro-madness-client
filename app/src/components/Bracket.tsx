@@ -1,9 +1,12 @@
 import { Match } from "../interfaces";
 import BracketMatch from "./BracketMatch";
 import styles from "./../../page.module.css";
+import { ROUND_NAMES } from "../constants";
+import { combineClasses } from "../util";
 
 interface BracketProps {
   matches: Match[];
+  selectedRound: number;
 }
 
 const MATCH_HEIGHT_PX = 60;
@@ -153,7 +156,19 @@ export default function Bracket(props: BracketProps) {
         height: `${TOTAL_BRACKET_HEIGHT}px`,
       }}
     >
-      <div className={styles.round}>
+      {[0, 1, 2, 3, 4].map((roundNumber) => (
+        <div className={styles.roundHeader} key={roundNumber}>
+          <div
+            className={combineClasses(
+              styles.roundHeaderText,
+              props.selectedRound === roundNumber && styles.selectedRound
+            )}
+          >
+            {ROUND_NAMES[roundNumber]}
+          </div>
+        </div>
+      ))}
+      <div className={styles.round} id="round-1">
         {getMatch("1")}
         {getMatchBracketConnector("1")}
         {getMatch("2")}
@@ -167,7 +182,7 @@ export default function Bracket(props: BracketProps) {
         {getMatch("6")}
         {getMatchBracketConnector("6")}
       </div>
-      <div className={styles.round}>
+      <div className={styles.round} id="round-2">
         {getMatch("9")}
         {getMatch("7")}
         {getMatchBracketConnector("9")}
@@ -181,7 +196,7 @@ export default function Bracket(props: BracketProps) {
         {getMatch("14")}
         {getMatchBracketConnector("13")}
       </div>
-      <div className={styles.round}>
+      <div className={styles.round} id="round-3">
         {getMatch("15")}
         {getMatch("16")}
         {getMatchBracketConnector("15")}
@@ -189,12 +204,14 @@ export default function Bracket(props: BracketProps) {
         {getMatch("18")}
         {getMatchBracketConnector("17")}
       </div>
-      <div className={styles.round}>
+      <div className={styles.round} id="round-4">
         {getMatch("19")}
         {getMatch("20")}
         {getMatchBracketConnector("19")}
       </div>
-      <div className={styles.round}>{getMatch("21")}</div>
+      <div className={styles.round} id="round-5">
+        {getMatch("21")}
+      </div>
     </div>
   );
 }
