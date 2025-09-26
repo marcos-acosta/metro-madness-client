@@ -20,7 +20,6 @@ import MatchesDashboard from "../components/MatchesDashboard";
 import Bracket from "../components/Bracket";
 import Footer from "../components/Footer";
 import SectionHeader from "../components/SectionHeader";
-import WeekSelector from "../components/WeekSelector";
 import { ROUND_NAMES } from "../constants";
 import { fetchBracketForWeek } from "../server";
 import Navigator from "../components/Navigator";
@@ -38,6 +37,7 @@ export default function HomepageLayout(props: HomepageLayoutProps) {
   const [selectedRound, setSelectedRound] = useState(
     getRoundToShowForWeek(getCurrentWeek())
   );
+  const [selectedMatchId, setSelectedMatchId] = useState<string | null>(null);
   const [lastUpdatedTime, setLastUpdatedTime] = useState<Date>(new Date());
 
   const matchesForSelectedWeek = Object.values(storedMatches).filter(
@@ -46,16 +46,16 @@ export default function HomepageLayout(props: HomepageLayoutProps) {
 
   const dateToShow = getDateForWeekAndRound(selectedWeek, selectedRound);
 
-  const routesToShowInHeader = getAllRoutesStillCompeting(
-    matchesForSelectedWeek
-  );
-
   const roundName = ROUND_NAMES[selectedRound];
 
   const matchesInRoundToShow = getMatchesInRound(
     matchesForSelectedWeek,
     selectedRound
   ).filter(hasBothCompetitors);
+
+  const selectedMatch = matchesForSelectedWeek.find(
+    (match) => match.matchId === selectedMatchId
+  );
 
   const update = async () => {
     if (isGameTime()) {
@@ -67,6 +67,10 @@ export default function HomepageLayout(props: HomepageLayoutProps) {
       setLastUpdatedTime(new Date());
     }
   };
+
+  const routesToShowInHeader = selectedMatch
+    ? selectedMatch.matchData.competingTrips.map((trip) => trip.routeId!)
+    : getAllRoutesStillCompeting(matchesForSelectedWeek);
 
   useEffect(() => {
     const interval = setInterval(update, 60 * 1000);
@@ -87,35 +91,63 @@ export default function HomepageLayout(props: HomepageLayoutProps) {
         />
       </div>
       <div className={styles.whiteBg}>
-        <div className={styles.sectionHeaderOuterContainer}>
-          <SectionHeader text={`${formatDateShort(dateToShow)}: ${roundName}`}>
-            <Navigator
-              onBack={() => {
-                setSelectedRound(selectedRound - 1);
-              }}
-              onForward={() => {
-                setSelectedRound(selectedRound + 1);
-              }}
-              backDisabled={selectedRound === 0}
-              forwardDisabled={selectedRound === 4}
-            />
-          </SectionHeader>
-        </div>
-        <div className={styles.matchesDashboardOuterContainer}>
-          <MatchesDashboard matches={matchesInRoundToShow} />
-        </div>
-        <div className={styles.sectionHeaderOuterContainer}>
-          <SectionHeader text={"Bracket"} />
-        </div>
-        <div className={styles.bracketOuterContainer}>
-          <Bracket
-            matches={matchesForSelectedWeek}
-            selectedRound={selectedRound}
-          />
-        </div>
-        <div className={styles.weekSelectorOuterContainer}>
-          <SeeAllWeeks callback={() => {}} />
-        </div>
+        {selectedMatch ? (
+          <>
+            <div className={styles.sectionHeaderOuterContainer}>
+              <SectionHeader
+                text={`${formatDateShort(dateToShow)}: ${
+                  selectedMatch.matchData.competingTrips[0].routeId
+                } train / ${
+                  selectedMatch.matchData.competingTrips[1].routeId
+                } train`}
+              >
+                <Navigator
+                  onBack={() => {
+                    setSelectedMatchId(null);
+                  }}
+                />
+              </SectionHeader>
+            </div>
+          </>
+        ) : (
+          <>
+            <div className={styles.sectionHeaderOuterContainer}>
+              <SectionHeader
+                text={`${formatDateShort(dateToShow)}: ${roundName}`}
+              >
+                <Navigator
+                  onBack={() => {
+                    setSelectedRound(selectedRound - 1);
+                  }}
+                  onForward={() => {
+                    setSelectedRound(selectedRound + 1);
+                  }}
+                  backDisabled={selectedRound === 0}
+                  forwardDisabled={selectedRound === 4}
+                />
+              </SectionHeader>
+            </div>
+            <div className={styles.matchesDashboardOuterContainer}>
+              <MatchesDashboard
+                matches={matchesInRoundToShow}
+                selectMatchId={setSelectedMatchId}
+              />
+            </div>
+            <div className={styles.sectionHeaderOuterContainer}>
+              <SectionHeader text={"Bracket"} />
+            </div>
+            <div className={styles.bracketOuterContainer}>
+              <Bracket
+                matches={matchesForSelectedWeek}
+                selectedRound={selectedRound}
+                setSelectedMatch={setSelectedMatchId}
+              />
+            </div>
+            <div className={styles.weekSelectorOuterContainer}>
+              <SeeAllWeeks callback={() => {}} />
+            </div>
+          </>
+        )}
       </div>
       <div className={styles.footerOuterContainer}>
         <Footer />

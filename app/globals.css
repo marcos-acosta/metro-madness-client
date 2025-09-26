@@ -43,4 +43,5 @@ button {
   font-weight: inherit;
   padding: 0;
   cursor: pointer;
+  text-align: left;
 }

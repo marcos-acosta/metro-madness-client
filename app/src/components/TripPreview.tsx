@@ -6,7 +6,6 @@ import {
   getNameFromRouteId,
 } from "../util";
 import styles from "./../../page.module.css";
-import ProgressBar from "./ProgressBar";
 import ServiceBullet from "./ServiceBullet";
 
 interface TripPreviewProps {

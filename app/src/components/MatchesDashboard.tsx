@@ -6,6 +6,7 @@ import Image from "next/image";
 
 interface MatchesDashboardProps {
   matches: Match[];
+  selectMatchId: (id: string) => void;
 }
 
 const SHORTENED_LIST_LENGTH = 2;
@@ -22,7 +23,11 @@ export default function MatchesDashboard(props: MatchesDashboardProps) {
     <div className={styles.matchesDashboardInnerContainer}>
       <div className={styles.matchesDashboardGrid}>
         {matchesToShow.map((match) => (
-          <MatchPreview match={match} key={match.matchId} />
+          <MatchPreview
+            match={match}
+            key={match.matchId}
+            select={() => props.selectMatchId(match.matchId)}
+          />
         ))}
       </div>
       {matchesToHide && (

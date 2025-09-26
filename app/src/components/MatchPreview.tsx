@@ -6,6 +6,7 @@ import TripPreview from "./TripPreview";
 
 interface MatchPreviewProps {
   match: Match;
+  select: () => void;
 }
 
 const matchStatusToText = {
@@ -24,7 +25,10 @@ export default function MatchPreview(props: MatchPreviewProps) {
     (props.match.matchData.competingTrips[0].routeId === winner ? 2 : 1);
 
   return (
-    <div className={styles.matchPreviewInnerContainer}>
+    <button
+      className={styles.matchPreviewInnerContainer}
+      onClick={props.select}
+    >
       <div className={styles.matchPreviewHeader}>
         <div className={styles.roundNameContainer}>{roundName}</div>
         <div className={styles.matchPreviewStatusContainer}>{matchStatus}</div>
@@ -49,6 +53,6 @@ export default function MatchPreview(props: MatchPreviewProps) {
           />
         )}
       </div>
-    </div>
+    </button>
   );
 }

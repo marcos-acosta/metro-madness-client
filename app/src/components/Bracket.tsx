@@ -7,6 +7,7 @@ import { combineClasses } from "../util";
 interface BracketProps {
   matches: Match[];
   selectedRound: number;
+  setSelectedMatch: (id: string) => void;
 }
 
 const MATCH_HEIGHT_PX = 60;
@@ -30,7 +31,8 @@ export default function Bracket(props: BracketProps) {
     const verticalOffset =
       MATCH_VERTICAL_OFFSETS[matchId as keyof typeof MATCH_VERTICAL_OFFSETS];
     return match ? (
-      <div
+      <button
+        onClick={() => props.setSelectedMatch(match.matchId)}
         className={styles.matchOuterContainer}
         style={{
           top: `${verticalOffset}px`,
@@ -39,7 +41,7 @@ export default function Bracket(props: BracketProps) {
         }}
       >
         <BracketMatch match={match} />
-      </div>
+      </button>
     ) : null;
   };
 
