@@ -152,6 +152,7 @@
   flex-grow: 1;
   font-weight: bold;
   font-size: 2.5rem;
+  margin-bottom: 10px;
 }
 
 .weekRangeContainer {
@@ -161,8 +162,7 @@
 }
 
 .currentWeekContainerRightSide {
-  /* height: 175px; */
-  padding-right: 20px;
+  padding-right: 10px;
 }
 
 .weekHeaderOuterContainer {
@@ -170,9 +170,9 @@
 }
 
 .routesGrid {
+  --grid-size: 80px;
   display: grid;
-  --grid-size: 60px;
-  height: var(--grid-size);
+  gap: 5px;
 }
 
 .hudServiceBulletContainer {
@@ -183,9 +183,24 @@
   height: var(--grid-size);
 }
 
-.twoRows .hudServiceBulletContainer {
+.rows_2 .hudServiceBulletContainer {
   width: calc(var(--grid-size) / 2);
   height: calc(var(--grid-size) / 2);
+}
+
+.rows_3 .hudServiceBulletContainer {
+  width: calc(var(--grid-size) / 3);
+  height: calc(var(--grid-size) / 3);
+}
+
+.rows_4 .hudServiceBulletContainer {
+  width: calc(var(--grid-size) / 4);
+  height: calc(var(--grid-size) / 4);
+}
+
+.rows_5 .hudServiceBulletContainer {
+  width: calc(var(--grid-size) / 5);
+  height: calc(var(--grid-size) / 5);
 }
 
 .hudServiceBulletContainer .bracketMatchBullet {
@@ -196,24 +211,24 @@
   width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 5px;
 }
 
 .sectionHeaderText {
   font-weight: bold;
   text-transform: uppercase;
-  font-size: 30px;
+  font-size: 1rem;
 }
 
 .sectionHeaderLine {
   width: 100%;
-  border-bottom: 2px solid var(--theme-black);
+  border-bottom: 1px solid var(--theme-black);
+  margin-top: 3px;
 }
 
 .sectionHeaderOuterContainer {
   background-color: var(--theme-white);
   width: 100%;
-  padding: 0px 18px 0 18px;
+  padding: 0px 10px 0 10px;
 }
 
 .footerInnerContainer {
@@ -242,7 +257,7 @@
 
 .whiteBg {
   background-color: var(--theme-white);
-  padding-top: 20px;
+  padding-top: 12px;
 }
 
 .weekSelectorOuterContainer {
