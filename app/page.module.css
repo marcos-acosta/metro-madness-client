@@ -104,8 +104,8 @@
 }
 
 .bracketOuterContainer {
+  margin-top: 20px;
   background-color: var(--theme-white);
-  padding: 30px 0;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -248,8 +248,8 @@
   background-color: var(--theme-sand);
   flex-grow: 1;
   padding: 18px;
-  font-size: 16px;
-  line-height: 1.25rem;
+  font-size: 0.8rem;
+  line-height: 1rem;
 }
 
 .footerBlackBar {
@@ -358,7 +358,8 @@
   display: flex;
   flex-direction: column;
   gap: 3px;
-  padding-top: 5px;
+  padding-top: 6px;
+  padding-left: 3px;
 }
 
 .serviceNameContainer {
@@ -521,4 +522,22 @@
 
 .showHideText {
   font-weight: bold;
+}
+
+.seeAllWeeksInnerContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+}
+
+.seeAllWeeksText {
+  padding-top: 2px;
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+.seeAllWeeksArrow {
+  width: 15px;
+  height: unset;
 }

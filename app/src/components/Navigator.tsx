@@ -22,8 +22,8 @@ export default function Navigator(props: NavigatorProps) {
       >
         <Image
           src="/arrows/left-arrow.svg"
-          width="50"
-          height="50"
+          width="25"
+          height="25"
           alt="Back one round"
           className={styles.arrowImage}
         />
@@ -39,8 +39,8 @@ export default function Navigator(props: NavigatorProps) {
       >
         <Image
           src="/arrows/right-arrow.svg"
-          width="50"
-          height="50"
+          width="25"
+          height="25"
           alt="Forward one round"
           className={styles.arrowImage}
         />

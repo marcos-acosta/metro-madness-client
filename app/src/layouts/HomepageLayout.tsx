@@ -24,6 +24,7 @@ import WeekSelector from "../components/WeekSelector";
 import { ROUND_NAMES } from "../constants";
 import { fetchBracketForWeek } from "../server";
 import Navigator from "../components/Navigator";
+import SeeAllWeeks from "../components/SeeAllWeeks";
 
 interface HomepageLayoutProps {
   initialMatches: Match[];
@@ -110,11 +111,7 @@ export default function HomepageLayout(props: HomepageLayoutProps) {
           <Bracket matches={matchesForSelectedWeek} />
         </div>
         <div className={styles.weekSelectorOuterContainer}>
-          <WeekSelector
-            matches={Object.values(storedMatches)}
-            selectedWeek={selectedWeek}
-            setSelectedWeek={setSelectedWeek}
-          />
+          <SeeAllWeeks callback={() => {}} />
         </div>
       </div>
       <div className={styles.footerOuterContainer}>

@@ -27,13 +27,13 @@ export default function MatchesDashboard(props: MatchesDashboardProps) {
       </div>
       {matchesToHide && (
         <div className={styles.showHideContainer}>
-          <div className={styles.showHideTextAndArrowContainer}>
-            <button
-              className={styles.showHideText}
-              onClick={() => setShowAllPreviews(!showAllPreviews)}
-            >
+          <button
+            className={styles.showHideTextAndArrowContainer}
+            onClick={() => setShowAllPreviews(!showAllPreviews)}
+          >
+            <div className={styles.showHideText}>
               {showAllPreviews ? "Collapse" : "Show all"}
-            </button>
+            </div>
             <div className={styles.arrowContainer}>
               <Image
                 className={styles.expandArrow}
@@ -44,7 +44,7 @@ export default function MatchesDashboard(props: MatchesDashboardProps) {
                 style={{ rotate: `${showAllPreviews ? 270 : 90}deg` }}
               />
             </div>
-          </div>
+          </button>
         </div>
       )}
     </div>
