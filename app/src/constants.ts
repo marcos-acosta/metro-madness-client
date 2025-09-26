@@ -38,15 +38,15 @@ export const ROUTE_ID_TO_TRUNK_LINE = {
 };
 
 export const COLORS = {
-  [TrunkLine.SIXTH_AVE]: "#EB6800",
-  [TrunkLine.SEVENTH_AVE]: "#D82233",
-  [TrunkLine.EIGHTH_AVE]: "#0062CF",
-  [TrunkLine.LEXINGTON]: "#009952",
-  [TrunkLine.BROADWAY]: "#F6BC26",
-  [TrunkLine.NASSAU]: "#8E5C33",
-  [TrunkLine.CANARSIE]: "#7C858C",
-  [TrunkLine.FLUSHING]: "#9A38A1",
-  [TrunkLine.CROSSTOWN]: "#799534",
+  [TrunkLine.SIXTH_AVE]: "#FF6319",
+  [TrunkLine.SEVENTH_AVE]: "#EE352E",
+  [TrunkLine.EIGHTH_AVE]: "#0039A6",
+  [TrunkLine.LEXINGTON]: "#00933C",
+  [TrunkLine.BROADWAY]: "#FCCC0A",
+  [TrunkLine.NASSAU]: "#996633",
+  [TrunkLine.CANARSIE]: "#A7A9AC",
+  [TrunkLine.FLUSHING]: "#B933AD",
+  [TrunkLine.CROSSTOWN]: "#6CBE45",
 };
 
 export const HOUR_5PM_IN_MINUTES = (12 + 5) * 60;

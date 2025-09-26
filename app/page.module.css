@@ -121,12 +121,12 @@
   color: var(--theme-white);
   background: var(--theme-black);
   width: 100%;
-  padding: 18px 18px 35px 18px;
+  padding: 10px 0 20px 10px;
 }
 
 .headerTitleContainer {
-  font-size: 40px;
-  font-weight:bold;
+  font-size: 1rem;
+  font-weight: bold;
 }
 
 .aboutText:hover {
@@ -144,24 +144,24 @@
 .currentWeekContainerLeftSide {
   display: flex;
   flex-direction: column;
-  padding-left: 18px;
+  padding-left: 10px;
   flex-grow: 1;
 }
 
 .weekNumberContainer {
   flex-grow: 1;
   font-weight: bold;
-  font-size: 75px;
+  font-size: 2.5rem;
 }
 
 .weekRangeContainer {
-  font-size: 30px;
+  font-size: 1rem;
   font-weight: bold;
   flex-shrink: 1;
 }
 
 .currentWeekContainerRightSide {
-  height: 175px;
+  /* height: 175px; */
   padding-right: 20px;
 }
 
@@ -171,7 +171,7 @@
 
 .routesGrid {
   display: grid;
-  --grid-size: 175px;
+  --grid-size: 60px;
   height: var(--grid-size);
 }
 
