@@ -60,8 +60,9 @@ export default function FullPageTrip(props: FullPageTripProps) {
                 victoryRequiredCoinToss ? " coin toss" : ""
               }`}
           </div>
+          {finished && !won && <div className={styles.fullPageLoserShader} />}
         </div>
-        <div className={styles.fullPageTripProgress}>there</div>
+        <div className={styles.fullPageTripProgress}></div>
       </>
     )
   );

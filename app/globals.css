@@ -6,6 +6,7 @@
   --theme-dark-gray: rgb(72, 72, 72);
   --theme-sand: rgb(216, 204, 174);
   --theme-fade: rgba(23, 23, 23, 0.402);
+  --white-fade: rgba(256, 256, 256, 0.402);
 }
 
 html,
