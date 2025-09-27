@@ -232,7 +232,6 @@ export const getLatestDelayTimeUpToMaxNumStops = (
   trip: TripData,
   maxNumStops?: number
 ) => {
-  console.log(maxNumStops);
   if (!trip.stops) {
     return;
   }
