@@ -31,7 +31,7 @@ export default function MatchPreview(props: MatchPreviewProps) {
     if (!containerRef.current) return;
 
     const resizeObserver = new ResizeObserver((entries) => {
-      for (let entry of entries) {
+      for (const entry of entries) {
         const width = entry.contentRect.width;
         setContainerWidth(width);
       }
