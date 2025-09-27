@@ -6,6 +6,7 @@ import {
   getNameFromRouteId,
 } from "../util";
 import styles from "./../../page.module.css";
+import ProgressPreview from "./ProgressPreview";
 import ServiceBullet from "./ServiceBullet";
 
 interface TripPreviewProps {
@@ -15,6 +16,7 @@ interface TripPreviewProps {
   finished?: boolean;
   won?: boolean;
   victoryType?: VictoryType;
+  showProgressPreview?: boolean;
 }
 
 const TRIP_STATUS_TO_TEXT = {
@@ -60,6 +62,17 @@ export default function TripPreview(props: TripPreviewProps) {
             }`}
         </div>
       </div>
+      {props.showProgressPreview && (
+        <div
+          className={styles.progressPreviewContainer}
+          style={{ gridRow: props.row }}
+        >
+          <ProgressPreview
+            tripData={props.tripData}
+            numStops={props.numStops}
+          />
+        </div>
+      )}
       <div
         className={combineClasses(
           styles.delayContainer,

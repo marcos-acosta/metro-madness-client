@@ -358,6 +358,10 @@
   width: 100%;
 }
 
+.matchPreviewLinesContainer.withProgress {
+  grid-template-columns: 38px auto 1fr auto;
+}
+
 .tripPreviewInnerContainer {
   display: flex;
   flex-direction: row;
@@ -398,10 +402,10 @@
   font-size: 0.8rem;
 }
 
-/* .progressContainer {
+.progressPreviewContainer {
   grid-column: 3;
   padding: 0 10px 0 10px;
-} */
+}
 
 .progressBarInnerContainer {
   width: 100%;
@@ -409,26 +413,32 @@
   display: flex;
   flex-direction: row;
   align-items: center;
-  padding: 0 10px 0 10px;
+  padding: 0 15px;
 }
 
 .underlyingLineContainer {
   width: 100%;
-  height: 10%;
-  background-color: var(--theme-med-gray);
+  height: 15%;
+  /* background-color: var(--theme-med-gray); */
   border-radius: 100vh;
   position: relative;
+  display: flex;
+  align-items: center;
 }
 
-.underlyingLineContainer.started {
+/* .underlyingLineContainer.started {
   background-color: var(--theme-white);
-}
+} */
 
 .progressGrid {
   display: grid;
   grid-template-rows: 1fr;
   width: 100%;
   height: 100%;
+  outline: 5px solid var(--theme-white);
+  background-color: var(--theme-white);
+  border-radius: 5px;
+  padding: 0 5px;
 }
 
 .progressBarSegmentInnerContainer {
@@ -439,12 +449,24 @@
 }
 
 .stopCircle {
-  height: 100%;
+  height: 90%;
   aspect-ratio: 1 / 1;
   border-radius: 50%;
   background-color: var(--theme-white);
   outline: 3px solid var(--theme-black);
   z-index: 1;
+  top: 5%;
+}
+
+.stopNameContainer {
+  position: absolute;
+  font-size: 0.8rem;
+  width: 200px;
+  top: 15px;
+}
+
+.stopContainer {
+  position: relative;
 }
 
 .firstStopContainer .stopCircle {
@@ -464,7 +486,7 @@
   align-items: flex-end;
   justify-content: center;
   color: var(--theme-white);
-  grid-column: 3;
+  grid-column: 4;
   padding: 0 8px;
 }
 
@@ -490,7 +512,7 @@
 }
 
 .previewLoserShader {
-  grid-column: 1 / 4;
+  grid-column: 1 / 5;
   z-index: 1;
   background-color: var(--theme-fade);
   border-radius: 5px;
@@ -566,4 +588,120 @@
 .seeAllWeeksArrow {
   width: 15px;
   height: unset;
+}
+
+.progressLine {
+  width: 100%;
+  height: 3px;
+  position: absolute;
+  height: 50%;
+}
+
+.progressPreviewInnerContainer {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  /* background-color: var(--theme-white); */
+  padding: 0 20px;
+  border-radius: 5px;
+}
+
+.progressPreviewBarContainer {
+  width: 100%;
+  display: grid;
+  height: 20%;
+}
+
+.segmentContainer {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.segment {
+  width: 100%;
+  height: 50%;
+  z-index: 1;
+}
+
+.segment.filledSegment {
+  height: 100%;
+}
+
+.leftTerminalContainer {
+  position: absolute;
+  height: 100%;
+  left: 0;
+}
+
+.leftTerminalSquareContainer {
+  position: absolute;
+  height: 100%;
+  left: 0;
+  transform: translateX(-50%);
+  z-index: 2;
+}
+
+.leftTerminalNameContainer {
+  position: absolute;
+  left: 0;
+  transform: translateY(100%) translateX(-5px);
+  white-space: nowrap;
+  width: max-content;
+}
+
+.rightTerminalNameContainer {
+  position: absolute;
+  right: 0;
+  transform: translateY(100%) translateX(5px);
+  white-space: nowrap;
+  width: max-content;
+}
+
+.middleTerminalNameContainer {
+  position: absolute;
+  right: 0;
+  transform: translateY(-120%) translateX(50%);
+  white-space: nowrap;
+  width: max-content;
+}
+
+.middleTerminalNameContainer.leftAlign {
+  transform: translateY(-120%) translateX(100%);
+}
+
+.middleTerminalNameContainer.rightAlign {
+  transform: translateY(-120%) translateX(0%);
+}
+
+.terminalNameContainer {
+  color: var(--theme-white);
+  font-weight: bold;
+  font-size: 0.8rem;
+}
+
+.rightTerminalContainer {
+  position: absolute;
+  height: 100%;
+  right: 0;
+}
+
+.rightTerminalSquareContainer {
+  position: absolute;
+  height: 100%;
+  right: 0;
+  transform: translateX(50%);
+  z-index: 2;
+}
+
+.terminalSquare {
+  height: 100%;
+  aspect-ratio: 1 / 1;
+  background-color: var(--theme-white);
+  outline: 3px solid var(--theme-black);
+  border-radius: 50%;
 }
