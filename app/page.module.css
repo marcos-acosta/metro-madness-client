@@ -632,6 +632,10 @@
   height: 100%;
 }
 
+.segment.graySegment {
+  background-color: var(--theme-dark-gray);
+}
+
 .leftTerminalContainer {
   position: absolute;
   height: 100%;
@@ -682,6 +686,7 @@
   color: var(--theme-white);
   font-weight: bold;
   font-size: 0.8rem;
+  background-color: var(--theme-black);
 }
 
 .rightTerminalContainer {

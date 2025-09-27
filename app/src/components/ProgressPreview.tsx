@@ -6,6 +6,7 @@ import ProgressSegment from "./ProgressSegment";
 interface ProgressPreviewProps {
   tripData: TripData;
   numStops?: number;
+  lost?: boolean;
 }
 
 export default function ProgressPreview(props: ProgressPreviewProps) {
@@ -26,6 +27,7 @@ export default function ProgressPreview(props: ProgressPreviewProps) {
           [...Array(numSegments).keys()].map((segmentIndex) => (
             <ProgressSegment
               color={color}
+              grayOut={props.lost}
               key={segmentIndex}
               completed={
                 lastCompletedStopIndex

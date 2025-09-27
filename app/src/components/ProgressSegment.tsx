@@ -8,6 +8,7 @@ interface ProgressSegmentProps {
   stationName?: string;
   isOnRightSide?: boolean;
   color: string;
+  grayOut?: boolean;
 }
 
 export default function ProgressSegment(props: ProgressSegmentProps) {
@@ -28,9 +29,10 @@ export default function ProgressSegment(props: ProgressSegmentProps) {
       <div
         className={combineClasses(
           styles.segment,
-          props.completed && styles.filledSegment
+          props.completed && styles.filledSegment,
+          props.grayOut && styles.graySegment
         )}
-        style={{ backgroundColor: props.color }}
+        style={{ backgroundColor: props.grayOut ? undefined : props.color }}
       />
       {props.stationName && (
         <div className={styles.rightTerminalContainer}>

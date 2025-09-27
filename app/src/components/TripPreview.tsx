@@ -70,6 +70,7 @@ export default function TripPreview(props: TripPreviewProps) {
           <ProgressPreview
             tripData={props.tripData}
             numStops={props.numStops}
+            lost={props.finished && !props.won}
           />
         </div>
       )}
