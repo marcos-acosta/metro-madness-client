@@ -158,7 +158,7 @@ export default function Bracket(props: BracketProps) {
         height: `${TOTAL_BRACKET_HEIGHT}px`,
       }}
     >
-      {[0, 1, 2, 3, 4].map((roundNumber) => (
+      {[...Array(5).keys()].map((roundNumber) => (
         <div className={styles.roundHeader} key={roundNumber}>
           <div
             className={combineClasses(
