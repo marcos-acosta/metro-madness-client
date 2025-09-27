@@ -1,3 +1,4 @@
+import { TRIP_STATUS_TO_TEXT } from "../constants";
 import { TripData, TripStatus, VictoryType } from "../interfaces";
 import {
   combineClasses,
@@ -18,16 +19,6 @@ interface TripPreviewProps {
   victoryType?: VictoryType;
   showProgressPreview?: boolean;
 }
-
-const TRIP_STATUS_TO_TEXT = {
-  [TripStatus.DQ_DISAPPEARED]: "Disqualified",
-  [TripStatus.DQ_NEVER_ASSIGNED]: "Disqualified",
-  [TripStatus.DQ_NO_COMPETITOR]: "Disqualified",
-  [TripStatus.DQ_TOOK_TOO_LONG]: "Disqualified",
-  [TripStatus.NOT_ASSIGNED]: "No train yet",
-  [TripStatus.ONGOING]: "In transit",
-  [TripStatus.FINISHED]: "Finished",
-};
 
 export default function TripPreview(props: TripPreviewProps) {
   const tripStatusText = TRIP_STATUS_TO_TEXT[props.tripData.tripStatus!];

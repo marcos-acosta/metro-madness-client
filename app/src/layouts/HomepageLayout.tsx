@@ -24,6 +24,7 @@ import { ROUND_NAMES } from "../constants";
 import { fetchBracketForWeek } from "../server";
 import Navigator from "../components/Navigator";
 import SeeAllWeeks from "../components/SeeAllWeeks";
+import FullPageMatch from "../components/FullPageMatch";
 
 interface HomepageLayoutProps {
   initialMatches: Match[];
@@ -107,6 +108,7 @@ export default function HomepageLayout(props: HomepageLayoutProps) {
                   }}
                 />
               </SectionHeader>
+              <FullPageMatch match={selectedMatch} />
             </div>
           </>
         ) : (

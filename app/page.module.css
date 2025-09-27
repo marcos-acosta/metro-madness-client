@@ -711,3 +711,83 @@
   outline: 3px solid var(--theme-black);
   border-radius: 50%;
 }
+
+.fullPageMatchInnerContainer {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  padding: 30px 0 30px 0;
+}
+
+.fullPageMatchGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto auto;
+  grid-auto-flow: column;
+  column-gap: 15px;
+  row-gap: 15px;
+}
+
+.fullPageTripHeader {
+  display: flex;
+  flex-direction: column;
+}
+
+.fullPageRowLayout {
+  display: flex;
+  flex-direction: row;
+}
+
+.fullPageRouteIdContainer {
+  flex-shrink: 1;
+  flex-basis: 75px;
+}
+
+.fullPageDelayAndRouteContainer {
+  display: flex;
+  flex-direction: row;
+  height: 75px;
+  gap: 12px;
+}
+
+.leftSide .fullPageDelayAndRouteContainer {
+  flex-direction: row-reverse;
+}
+
+.fullPageDelayAndRouteContainer .bracketMatchBullet {
+  height: 100%;
+}
+
+.fullPageDelayTimeContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.leftSide .fullPageDelayTimeContainer {
+  text-align: right;
+}
+
+.fullPageDelayTime {
+  font-size: 1.4rem;
+  font-weight: bold;
+}
+
+.leftSide .fullPageRouteNameContainer {
+  text-align: right;
+}
+
+.leftSide .fullPageStatusText {
+  text-align: right;
+}
+
+.fullPageRouteNameContainer {
+  margin-top: 10px;
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+
+.fullPageStatusText {
+  font-size: 0.9rem;
+  color: var(--theme-med-gray);
+}
