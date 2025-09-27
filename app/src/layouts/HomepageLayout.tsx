@@ -6,6 +6,7 @@ import styles from "./../../page.module.css";
 import {
   formatDateShort,
   getAllRoutesStillCompeting,
+  getCurrentAndSurroundingWeeks,
   getCurrentWeek,
   getDateForWeekAndRound,
   getMatchesInRound,
@@ -21,7 +22,7 @@ import Bracket from "../components/Bracket";
 import Footer from "../components/Footer";
 import SectionHeader from "../components/SectionHeader";
 import { ROUND_NAMES } from "../constants";
-import { fetchBracketForWeek } from "../server";
+import { fetchBracketForWeek, fetchBracketsInRange } from "../server";
 import Navigator from "../components/Navigator";
 import SeeAllWeeks from "../components/SeeAllWeeks";
 import FullPageMatch from "../components/FullPageMatch";
@@ -40,6 +41,7 @@ export default function HomepageLayout(props: HomepageLayoutProps) {
   );
   const [selectedMatchId, setSelectedMatchId] = useState<string | null>(null);
   const [lastUpdatedTime, setLastUpdatedTime] = useState<Date>(new Date());
+  const [isLoading, setIsLoading] = useState(props.initialMatches.length === 0);
 
   const matchesForSelectedWeek = Object.values(storedMatches).filter(
     (match) => match.bracketId === selectedWeek
@@ -66,10 +68,34 @@ export default function HomepageLayout(props: HomepageLayoutProps) {
         ...matchesToCacheFormat(bracketsForWeek.matches),
       }));
       setLastUpdatedTime(new Date());
+      setIsLoading(false);
     }
   };
 
-  const routesToShowInHeader = selectedMatch
+  // Effect to load initial data if not provided
+  useEffect(() => {
+    if (props.initialMatches.length === 0) {
+      const loadInitialData = async () => {
+        try {
+          const weeks = getCurrentAndSurroundingWeeks();
+          const matchesResponse = await fetchBracketsInRange(
+            weeks[0],
+            weeks[weeks.length - 1]
+          );
+          setStoredMatches(matchesToCacheFormat(matchesResponse.matches));
+          setIsLoading(false);
+        } catch (error) {
+          console.error("Failed to load initial data:", error);
+          setIsLoading(false);
+        }
+      };
+      loadInitialData();
+    }
+  }, [props.initialMatches.length]);
+
+  const routesToShowInHeader = isLoading
+    ? []
+    : selectedMatch
     ? selectedMatch.matchData.competingTrips.map((trip) => trip.routeId!)
     : getAllRoutesStillCompeting(matchesForSelectedWeek);
 
@@ -130,20 +156,44 @@ export default function HomepageLayout(props: HomepageLayoutProps) {
               </SectionHeader>
             </div>
             <div className={styles.matchesDashboardOuterContainer}>
-              <MatchesDashboard
-                matches={matchesInRoundToShow}
-                selectMatchId={setSelectedMatchId}
-              />
+              {isLoading ? (
+                <div
+                  style={{
+                    padding: "2rem",
+                    textAlign: "center",
+                    color: "#666",
+                  }}
+                >
+                  Loading matches...
+                </div>
+              ) : (
+                <MatchesDashboard
+                  matches={matchesInRoundToShow}
+                  selectMatchId={setSelectedMatchId}
+                />
+              )}
             </div>
             <div className={styles.sectionHeaderOuterContainer}>
               <SectionHeader text={"Bracket"} />
             </div>
             <div className={styles.bracketOuterContainer}>
-              <Bracket
-                matches={matchesForSelectedWeek}
-                selectedRound={selectedRound}
-                setSelectedMatch={setSelectedMatchId}
-              />
+              {isLoading ? (
+                <div
+                  style={{
+                    padding: "2rem",
+                    textAlign: "center",
+                    color: "#666",
+                  }}
+                >
+                  Loading bracket...
+                </div>
+              ) : (
+                <Bracket
+                  matches={matchesForSelectedWeek}
+                  selectedRound={selectedRound}
+                  setSelectedMatch={setSelectedMatchId}
+                />
+              )}
             </div>
             <div className={styles.weekSelectorOuterContainer}>
               <SeeAllWeeks callback={() => {}} />
