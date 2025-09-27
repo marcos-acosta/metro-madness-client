@@ -1,40 +1,62 @@
+import Image from "next/image";
 import styles from "./../../page.module.css";
 
 export default function Footer() {
+  const dateFormatted = new Date().toLocaleDateString("en-US", {
+    month: "2-digit",
+    day: "2-digit",
+    year: "numeric",
+  });
+
   return (
     <div className={styles.footerInnerContainer}>
       <div className={styles.footerTextContainer}>
-        <b>Metro Madness</b> is a weekly single-elimination tournament that pits
-        unsuspecting NYC subway trains against one another in a contest of
-        punctuality. Games start every weekday at 5pm. Each game is a
-        competition between two <i>individual</i> trains from two different
-        services. The first train that departs from a terminal station after 5pm
-        becomes the representative for its service. For example, if the Q and
-        the 3 are competing, then the first Q train to depart from either 96 St
-        or Coney Island-Stillwell Av will compete against the first 3 train to
-        depart from either Harlem 148 St or New Lots Av. The &quot;finish
-        line&quot; is a number of stops, which will be the same for both
-        competing trains. The train which is the <i>least delayed</i> after
-        passing that many stops wins that game and its service proceeds to the
-        next round. This project was made with 🚇 by{" "}
-        <a
-          href="https://marcos.ac"
-          target="_blank"
-          rel="noreferrer"
-          className={styles.textLink}
-        >
-          Marcos Acosta
-        </a>{" "}
-        and uses{" "}
-        <a
-          href="https://github.com/jamespfennell/transiter"
-          target="_blank"
-          rel="noreferrer"
-          className={styles.textLink}
-        >
-          Transiter
-        </a>{" "}
-        for real-time transit data.
+        <div className={styles.footerGithubContainer}>
+          <div className={styles.githubImageContainer}>
+            <Image
+              src="/github.png"
+              width={35}
+              height={35}
+              alt="GitHub logo"
+              className={styles.githubLogo}
+            />
+          </div>
+          <div className={styles.footerText}>
+            <p>See the source code for Metro Madness:</p>
+            <p>
+              visit{" "}
+              <a
+                href="https://github.com/marcos-acosta/metro-madness-client"
+                target="_blank"
+                rel="noreferrer"
+              >
+                github.com/marcos-acosta
+              </a>
+            </p>
+          </div>
+        </div>
+        <div className={styles.footerCreatorContainer}>
+          POST: {dateFormatted} street level entrances, elevators,
+          stairway/landings, transfer areas. Made with 🚇 by{" "}
+          <a
+            href="https://marcos.ac"
+            target="_blank"
+            rel="noreferrer"
+            className={styles.textLink}
+          >
+            Marcos Acosta
+          </a>{" "}
+          using{" "}
+          <a
+            href="https://github.com/jamespfennell/transiter"
+            target="_blank"
+            rel="noreferrer"
+            className={styles.textLink}
+          >
+            Transiter
+          </a>{" "}
+          for real-time transit data.
+        </div>
       </div>
       <div className={styles.footerBlackBar} />
     </div>

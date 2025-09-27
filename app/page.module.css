@@ -264,14 +264,54 @@
   width: 100%;
   display: flex;
   flex-direction: column;
+  min-height: 110px;
+}
+
+.footerText {
+  font-size: 0.8rem;
+}
+
+.footerText a {
+  text-decoration: underline;
+}
+
+.footerCreatorContainer {
+  max-width: 250px;
+  font-weight: bold;
+  font-size: 0.6rem;
+  line-height: 0.7rem;
 }
 
 .footerTextContainer {
   background-color: var(--theme-sand);
   flex-grow: 1;
-  padding: 18px;
+  padding: 15px 10px 15px 20px;
   font-size: 0.8rem;
-  line-height: 1rem;
+  display: flex;
+  flex-direction: row;
+}
+
+@media (width <= 620px) {
+  .footerTextContainer {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .footerCreatorContainer {
+    max-width: 400px;
+    width: 100%;
+    padding-right: 10px;
+  }
+}
+
+
+.footerGithubContainer {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-grow: 1;
+  height: fit-content;
+  white-space: nowrap;
 }
 
 .footerBlackBar {
@@ -915,4 +955,20 @@
 
 .fullPageTripProgress.flipHorizontally {
   justify-content: flex-end;
+}
+
+.aboutSectionContainer {
+  padding: 10px 10px 20px 10px;
+}
+
+.aboutInnerContainer {
+  font-size: 1rem;
+}
+
+.aboutInnerContainer p {
+  margin-bottom: 10px;
+}
+
+.aboutInnerContainer p:last-child {
+  margin-bottom: 0;
 }

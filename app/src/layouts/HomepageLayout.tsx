@@ -26,6 +26,7 @@ import { fetchBracketForWeek, fetchBracketsInRange } from "../server";
 import Navigator from "../components/Navigator";
 import SeeAllWeeks from "../components/SeeAllWeeks";
 import FullPageMatch from "../components/FullPageMatch";
+import About from "../components/About";
 
 interface HomepageLayoutProps {
   initialMatches: Match[];
@@ -197,6 +198,16 @@ export default function HomepageLayout(props: HomepageLayoutProps) {
             </div>
             <div className={styles.weekSelectorOuterContainer}>
               <SeeAllWeeks callback={() => {}} />
+            </div>
+          </>
+        )}
+        {!selectedMatch && (
+          <>
+            <div className={styles.sectionHeaderOuterContainer}>
+              <SectionHeader text={"About"} />
+            </div>
+            <div className={styles.aboutSectionContainer}>
+              <About />
             </div>
           </>
         )}
