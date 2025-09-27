@@ -256,3 +256,21 @@ export const matchesToCacheFormat = (matches: Match[]) => {
 export const getDateForWeekAndRound = (week: string, round: number): Date => {
   return datestringToDate(addDaysToDate(week, round));
 };
+
+export const secondsSinceMidnightToTime = (seconds: number): string => {
+  const hours = Math.floor(seconds / 3600);
+  const minutes = Math.floor((seconds % 3600) / 60);
+  let period = "AM";
+  let displayHour = hours;
+  if (hours === 0) {
+    displayHour = 12;
+  } else if (hours === 12) {
+    period = "PM";
+    displayHour = 12;
+  } else if (hours > 12) {
+    displayHour = hours - 12;
+    period = "PM";
+  }
+  const minutesFormatted = `${minutes}`.padStart(2, "0");
+  return `${displayHour}:${minutesFormatted} ${period}`;
+};

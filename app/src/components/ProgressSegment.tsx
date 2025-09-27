@@ -9,6 +9,9 @@ interface ProgressSegmentProps {
   isOnRightSide?: boolean;
   color: string;
   grayOut?: boolean;
+  futureStopsInGray?: boolean;
+  disableLeftRightAlign?: boolean;
+  rightSubtitle?: string;
 }
 
 export default function ProgressSegment(props: ProgressSegmentProps) {
@@ -42,12 +45,28 @@ export default function ProgressSegment(props: ProgressSegmentProps) {
           <div
             className={combineClasses(
               styles.middleTerminalNameContainer,
-              props.isOnRightSide ? styles.rightAlign : styles.leftAlign
+              props.disableLeftRightAlign
+                ? props.isOnRightSide
+                  ? styles.rightAlign
+                  : styles.leftAlign
+                : undefined
             )}
           >
-            <div className={styles.terminalNameContainer}>
+            <div
+              className={combineClasses(
+                styles.terminalNameContainer,
+                props.futureStopsInGray &&
+                  !props.completed &&
+                  styles.grayStationName
+              )}
+            >
               {props.stationName}
             </div>
+            {props.rightSubtitle && (
+              <div className={styles.subtitleContainer}>
+                {props.rightSubtitle}
+              </div>
+            )}
           </div>
         </div>
       )}
@@ -57,9 +76,21 @@ export default function ProgressSegment(props: ProgressSegmentProps) {
             <div className={styles.terminalSquare} />
           </div>
           <div className={styles.rightTerminalNameContainer}>
-            <div className={styles.terminalNameContainer}>
+            <div
+              className={combineClasses(
+                styles.terminalNameContainer,
+                props.futureStopsInGray &&
+                  !props.completed &&
+                  styles.grayStationName
+              )}
+            >
               {props.rightTerminalText}
             </div>
+            {props.rightSubtitle && (
+              <div className={styles.subtitleContainer}>
+                {props.rightSubtitle}
+              </div>
+            )}
           </div>
         </div>
       )}
