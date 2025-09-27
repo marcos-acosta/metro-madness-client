@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="250px" height="250px" viewBox="0 0 100 100" style="transform: scale(-1, 1)">
+	<title>Left Arrow</title>
+    <rect x="75" y="40" width="60" height="20" fill="#000" transform="rotate(225, 85, 50)"/>
+    <rect x="75" y="40" width="60" height="20" fill="#000" transform="rotate(135, 85, 50)"/>
+	<rect x="0" y="40" width="80" height="20" fill="#000"/>
+</svg>

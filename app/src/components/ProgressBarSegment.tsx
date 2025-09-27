@@ -3,7 +3,8 @@ import styles from "./../../page.module.css";
 import StopCircle from "./StopCircle";
 
 interface ProgressBarSegmentProps {
-  isFirstSegment?: boolean;
+  showLeftCircle?: boolean;
+  showRightCircle?: boolean;
   filledIn: boolean;
   stopNameLeft?: string;
   stopNameRight?: string;
@@ -16,24 +17,29 @@ export default function ProgressBarSegment(props: ProgressBarSegmentProps) {
       className={styles.progressBarSegmentInnerContainer}
       style={{ backgroundColor: props.filledIn ? props.color : undefined }}
     >
-      {props.isFirstSegment && (
+      {props.showLeftCircle && (
         <div
           className={combineClasses(
             styles.stopContainer,
             styles.firstStopContainer
           )}
         >
-          <StopCircle />
+          <StopCircle color={props.color} />
+          {props.stopNameLeft && (
+            <div className={styles.stopNameContainer}>{props.stopNameLeft}</div>
+          )}
         </div>
       )}
-      <div
-        className={combineClasses(
-          styles.stopContainer,
-          styles.secondStopContainer
-        )}
-      >
-        <StopCircle />
-      </div>
+      {props.showRightCircle && (
+        <div
+          className={combineClasses(
+            styles.stopContainer,
+            styles.secondStopContainer
+          )}
+        >
+          <StopCircle color={props.filledIn ? props.color : undefined} />
+        </div>
+      )}
     </div>
   );
 }

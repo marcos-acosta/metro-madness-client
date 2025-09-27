@@ -228,10 +228,22 @@ export const formatDelay = (delaySeconds: number) => {
   return minutes > 0 ? `${minutes}m${secondsFormatted}s` : `${seconds}s`;
 };
 
-export const getLatestDelayTime = (trip: TripData) =>
-  trip.stops
-    ? trip.stops.toReversed().find((stop) => stop.delay !== undefined)?.delay
-    : undefined;
+export const getLatestDelayTimeUpToMaxNumStops = (
+  trip: TripData,
+  maxNumStops?: number
+) => {
+  if (!trip.stops) {
+    return;
+  }
+  const lastStopWithDelayIndex = trip.stops.findLastIndex((stop) => stop.delay);
+  if (lastStopWithDelayIndex === -1) {
+    return;
+  }
+  const lastDelayIndex = maxNumStops
+    ? Math.min(maxNumStops, lastStopWithDelayIndex)
+    : lastStopWithDelayIndex;
+  return trip.stops[lastDelayIndex].delay;
+};
 
 export const isGameTime = () => {
   const now = new Date();
@@ -251,4 +263,26 @@ export const matchesToCacheFormat = (matches: Match[]) => {
   return Object.fromEntries(
     matches.map((match) => [_encodeMatchToKey(match), match])
   );
+};
+
+export const getDateForWeekAndRound = (week: string, round: number): Date => {
+  return datestringToDate(addDaysToDate(week, round));
+};
+
+export const secondsSinceMidnightToTime = (seconds: number): string => {
+  const hours = Math.floor(seconds / 3600);
+  const minutes = Math.floor((seconds % 3600) / 60);
+  let period = "AM";
+  let displayHour = hours;
+  if (hours === 0) {
+    displayHour = 12;
+  } else if (hours === 12) {
+    period = "PM";
+    displayHour = 12;
+  } else if (hours > 12) {
+    displayHour = hours - 12;
+    period = "PM";
+  }
+  const minutesFormatted = `${minutes}`.padStart(2, "0");
+  return `${displayHour}:${minutesFormatted} ${period}`;
 };

@@ -1,39 +1,38 @@
-import { TripData, TripStatus } from "../interfaces";
+import { TRIP_STATUS_TO_TEXT } from "../constants";
+import { TripData, TripStatus, VictoryType } from "../interfaces";
 import {
   combineClasses,
   formatDelay,
-  getLatestDelayTime,
+  getLatestDelayTimeUpToMaxNumStops,
   getNameFromRouteId,
 } from "../util";
 import styles from "./../../page.module.css";
-import ProgressBar from "./ProgressBar";
+import ProgressPreview from "./ProgressPreview";
 import ServiceBullet from "./ServiceBullet";
 
 interface TripPreviewProps {
   tripData: TripData;
   numStops?: number;
-  isLoser?: boolean;
   row: number;
+  finished?: boolean;
+  won?: boolean;
+  victoryType?: VictoryType;
+  showProgressPreview?: boolean;
 }
-
-const TRIP_STATUS_TO_TEXT = {
-  [TripStatus.DQ_DISAPPEARED]: "Disqualified",
-  [TripStatus.DQ_NEVER_ASSIGNED]: "Disqualified",
-  [TripStatus.DQ_NO_COMPETITOR]: "Disqualified",
-  [TripStatus.DQ_TOOK_TOO_LONG]: "Disqualified",
-  [TripStatus.NOT_ASSIGNED]: "No train yet",
-  [TripStatus.ONGOING]: "In transit",
-  [TripStatus.FINISHED]: "Finished",
-};
 
 export default function TripPreview(props: TripPreviewProps) {
   const tripStatusText = TRIP_STATUS_TO_TEXT[props.tripData.tripStatus!];
   const latestDelayTime =
-    props.tripData.finalDelay || getLatestDelayTime(props.tripData);
-  const isBehind = latestDelayTime && latestDelayTime > 0;
-  const isAhead = latestDelayTime && latestDelayTime < 0;
-  const delayTimeString = latestDelayTime ? formatDelay(latestDelayTime) : "--";
+    props.tripData.finalDelay ||
+    getLatestDelayTimeUpToMaxNumStops(props.tripData, props.numStops);
+  const isBehind = latestDelayTime !== undefined && latestDelayTime > 0;
+  const isAhead = latestDelayTime !== undefined && latestDelayTime < 0;
+  const delayTimeString =
+    latestDelayTime !== undefined ? formatDelay(latestDelayTime) : "--";
   const isFinal = props.tripData.finalDelay !== undefined;
+  const victoryRequiredCoinToss =
+    props.victoryType === VictoryType.COIN_TOSS_BOTH_DQ ||
+    props.victoryType === VictoryType.COIN_TOSS_SAME_DELAY;
 
   return (
     <>
@@ -47,11 +46,26 @@ export default function TripPreview(props: TripPreviewProps) {
         <div className={styles.serviceNameContainer}>
           {getNameFromRouteId(props.tripData.routeId!)}
         </div>
-        <div className={styles.serviceStatusContainer}>{tripStatusText}</div>
+        <div className={styles.serviceStatusContainer}>
+          {tripStatusText}
+          {props.finished &&
+            ` • ${props.won ? "Won" : "Lost"}${
+              victoryRequiredCoinToss ? " coin toss" : ""
+            }`}
+        </div>
       </div>
-      <div className={styles.progressContainer} style={{ gridRow: props.row }}>
-        <ProgressBar tripData={props.tripData} numStops={props.numStops} />
-      </div>
+      {props.showProgressPreview && (
+        <div
+          className={styles.progressPreviewContainer}
+          style={{ gridRow: props.row }}
+        >
+          <ProgressPreview
+            tripData={props.tripData}
+            numStops={props.numStops}
+            lost={props.finished && !props.won}
+          />
+        </div>
+      )}
       <div
         className={combineClasses(
           styles.delayContainer,

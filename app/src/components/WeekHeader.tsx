@@ -14,8 +14,20 @@ interface WeekSelectorProps {
   weekStringDate: string;
 }
 
+const getNumRows = (numRoutes: number) => {
+  if (numRoutes <= 2) {
+    return 1;
+  } else if (numRoutes <= 4) {
+    return 2;
+  } else if (numRoutes <= 9) {
+    return 3;
+  } else {
+    return 4;
+  }
+};
+
 export default function WeekHeader(props: WeekSelectorProps) {
-  const numRows = props.routes.length > 4 ? 2 : 1;
+  const numRows = getNumRows(props.routes.length);
   const numColumns = Math.ceil(props.routes.length / numRows);
   const weekNumber = getWeekNumber(props.weekStringDate);
   const firstDayFormatted = formatDatestringShort(props.weekStringDate);
@@ -39,7 +51,7 @@ export default function WeekHeader(props: WeekSelectorProps) {
           <div
             className={combineClasses(
               styles.routesGrid,
-              numRows === 2 && styles.twoRows
+              numRows > 1 && styles[`rows_${numRows}`]
             )}
             style={{
               gridTemplateRows: `repeat(${numRows}, 1fr)`,

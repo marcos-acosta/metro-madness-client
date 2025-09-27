@@ -1,4 +1,4 @@
-import { RouteId, TrunkLine } from "./interfaces";
+import { RouteId, TripStatus, TrunkLine } from "./interfaces";
 
 export const NUM_MATCHES = 21;
 
@@ -47,6 +47,16 @@ export const COLORS = {
   [TrunkLine.CANARSIE]: "#7C858C",
   [TrunkLine.FLUSHING]: "#9A38A1",
   [TrunkLine.CROSSTOWN]: "#799534",
+};
+
+export const TRIP_STATUS_TO_TEXT = {
+  [TripStatus.DQ_DISAPPEARED]: "Disqualified",
+  [TripStatus.DQ_NEVER_ASSIGNED]: "Disqualified",
+  [TripStatus.DQ_NO_COMPETITOR]: "Disqualified",
+  [TripStatus.DQ_TOOK_TOO_LONG]: "Disqualified",
+  [TripStatus.NOT_ASSIGNED]: "No train yet",
+  [TripStatus.ONGOING]: "In transit",
+  [TripStatus.FINISHED]: "Finished",
 };
 
 export const HOUR_5PM_IN_MINUTES = (12 + 5) * 60;
