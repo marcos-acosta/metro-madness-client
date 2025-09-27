@@ -741,8 +741,7 @@
 }
 
 .fullPageRouteIdContainer {
-  flex-shrink: 1;
-  flex-basis: 75px;
+  width: 75px;
 }
 
 .fullPageDelayAndRouteContainer {
