@@ -228,10 +228,23 @@ export const formatDelay = (delaySeconds: number) => {
   return minutes > 0 ? `${minutes}m${secondsFormatted}s` : `${seconds}s`;
 };
 
-export const getLatestDelayTime = (trip: TripData) =>
-  trip.stops
-    ? trip.stops.toReversed().find((stop) => stop.delay !== undefined)?.delay
-    : undefined;
+export const getLatestDelayTimeUpToMaxNumStops = (
+  trip: TripData,
+  maxNumStops?: number
+) => {
+  console.log(maxNumStops);
+  if (!trip.stops) {
+    return;
+  }
+  const lastStopWithDelayIndex = trip.stops.findLastIndex((stop) => stop.delay);
+  if (lastStopWithDelayIndex === -1) {
+    return;
+  }
+  const lastDelayIndex = maxNumStops
+    ? Math.min(maxNumStops, lastStopWithDelayIndex)
+    : lastStopWithDelayIndex;
+  return trip.stops[lastDelayIndex].delay;
+};
 
 export const isGameTime = () => {
   const now = new Date();

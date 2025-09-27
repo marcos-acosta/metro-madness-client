@@ -44,7 +44,7 @@ export default function VerticalProgress(props: VerticalProgressProps) {
     props.tripData.stops.findLastIndex((stop) => stop.delay !== undefined);
   const color = getColorFromRouteId(props.tripData.routeId!);
 
-  const numSegments = (props.numStops || 20) - 1;
+  const numSegments = props.numStops || 20;
 
   return (
     <div

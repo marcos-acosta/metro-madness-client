@@ -3,7 +3,7 @@ import { TripData, TripStatus, VictoryType } from "../interfaces";
 import {
   combineClasses,
   formatDelay,
-  getLatestDelayTime,
+  getLatestDelayTimeUpToMaxNumStops,
   getNameFromRouteId,
 } from "../util";
 import styles from "./../../page.module.css";
@@ -23,7 +23,8 @@ interface TripPreviewProps {
 export default function TripPreview(props: TripPreviewProps) {
   const tripStatusText = TRIP_STATUS_TO_TEXT[props.tripData.tripStatus!];
   const latestDelayTime =
-    props.tripData.finalDelay || getLatestDelayTime(props.tripData);
+    props.tripData.finalDelay ||
+    getLatestDelayTimeUpToMaxNumStops(props.tripData, props.numStops);
   const isBehind = latestDelayTime !== undefined && latestDelayTime > 0;
   const isAhead = latestDelayTime !== undefined && latestDelayTime < 0;
   const delayTimeString =

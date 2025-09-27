@@ -3,7 +3,7 @@ import { MatchData, TripData, VictoryType } from "../interfaces";
 import {
   combineClasses,
   formatDelay,
-  getLatestDelayTime,
+  getLatestDelayTimeUpToMaxNumStops,
   getNameFromRouteId,
 } from "../util";
 import styles from "./../../page.module.css";
@@ -18,7 +18,10 @@ interface FullPageTripProps {
 
 export default function FullPageTrip(props: FullPageTripProps) {
   const tripStatusText = TRIP_STATUS_TO_TEXT[props.trip.tripStatus!];
-  const latestDelayTime = getLatestDelayTime(props.trip);
+  const latestDelayTime = getLatestDelayTimeUpToMaxNumStops(
+    props.trip,
+    props.matchData.numStopsToFinish
+  );
   const isBehind = latestDelayTime !== undefined && latestDelayTime > 0;
   const isAhead = latestDelayTime !== undefined && latestDelayTime < 0;
   const delayTimeString =
