@@ -7,7 +7,6 @@ import {
   getNameFromRouteId,
 } from "../util";
 import styles from "./../../page.module.css";
-import ProgressPreview from "./ProgressPreview";
 import ServiceBullet from "./ServiceBullet";
 import VerticalProgress from "./VerticalProgress";
 
@@ -64,7 +63,12 @@ export default function FullPageTrip(props: FullPageTripProps) {
           </div>
           {finished && !won && <div className={styles.fullPageLoserShader} />}
         </div>
-        <div className={styles.fullPageTripProgress}>
+        <div
+          className={combineClasses(
+            styles.fullPageTripProgress,
+            props.leftSide && styles.flipHorizontally
+          )}
+        >
           <VerticalProgress
             tripData={props.trip}
             numStops={props.matchData.numStopsToFinish}

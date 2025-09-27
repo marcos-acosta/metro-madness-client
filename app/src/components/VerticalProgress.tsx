@@ -1,5 +1,6 @@
 import { TripData } from "../interfaces";
 import {
+  combineClasses,
   formatDelay,
   getColorFromRouteId,
   secondsSinceMidnightToTime,
@@ -19,7 +20,7 @@ const getStopSubtitle = (tripData: TripData, stopIndex: number) => {
   const stopData = tripData.stops[stopIndex];
   if (stopData.delay) {
     const formattedDelay = formatDelay(stopData.delay);
-    const suffix = stopData.delay > 0 ? "behind" : "ahead";
+    const suffix = stopData.delay > 0 ? "delay" : "ahead";
     return stopData.delay === 0 ? "On time" : `${formattedDelay} ${suffix}`;
   } else {
     const expectedTimeFormatted = secondsSinceMidnightToTime(
@@ -29,17 +30,25 @@ const getStopSubtitle = (tripData: TripData, stopIndex: number) => {
   }
 };
 
+const abridgeStationName = (stationName: string) => {
+  if (stationName.length <= 15) {
+    return stationName;
+  } else {
+    return `${stationName.slice(0, 15).trim()}…`;
+  }
+};
+
 export default function VerticalProgress(props: VerticalProgressProps) {
-  const lastCompletedStopIndex = Math.floor(Math.random() * 15);
-  // props.tripData.stops &&
-  // props.tripData.stops.findLastIndex((stop) => stop.delay !== undefined);
+  const lastCompletedStopIndex =
+    props.tripData.stops &&
+    props.tripData.stops.findLastIndex((stop) => stop.delay !== undefined);
   const color = getColorFromRouteId(props.tripData.routeId!);
 
   const numSegments = (props.numStops || 20) - 1;
 
   return (
     <div
-      className={styles.verticalProgressInnerContainer}
+      className={combineClasses(styles.verticalProgressInnerContainer)}
       style={{ gridTemplateRows: `repeat(${numSegments}, 50px)` }}
     >
       {props.tripData.stops &&
@@ -55,18 +64,22 @@ export default function VerticalProgress(props: VerticalProgressProps) {
                 : false
             }
             leftTerminalText={
-              segmentIndex === 0 ? props.tripData.stops![0].stopName : undefined
+              segmentIndex === 0
+                ? abridgeStationName(props.tripData.stops![0].stopName)
+                : undefined
             }
             rightTerminalText={
               segmentIndex === numSegments - 1
-                ? props.tripData.stops![numSegments + 1].stopName
+                ? abridgeStationName(
+                    props.tripData.stops![numSegments + 1].stopName
+                  )
                 : undefined
             }
             stationName={
-              lastCompletedStopIndex &&
-              lastCompletedStopIndex > 0 &&
-              lastCompletedStopIndex < numSegments
-                ? props.tripData.stops![segmentIndex + 1].stopName
+              segmentIndex < numSegments - 1
+                ? abridgeStationName(
+                    props.tripData.stops![segmentIndex + 1].stopName
+                  )
                 : undefined
             }
             isOnRightSide={segmentIndex > numSegments / 2}
