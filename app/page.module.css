@@ -10,10 +10,10 @@
 .bracket {
   display: grid;
   position: relative;
-  height: 700px;
+  height: 730px;
   overflow-x: auto;
   padding: 0 50px;
-  grid-template-rows: 35px auto;
+  grid-template-rows: 60px auto;
 }
 
 .round {
@@ -25,13 +25,24 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  transform: translateX(-10px);
 }
 
 .roundHeaderText {
-  font-weight: bold;
-  padding: 5px;
+  padding: 6px 5px 5px 5px;
   border-radius: 5px;
+  transform: translateX(-10px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.roundNameWeekday {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+}
+
+.roundNameInnerText {
+  font-weight: bold;
 }
 
 .roundHeaderText.selectedRound {

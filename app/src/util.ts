@@ -289,3 +289,6 @@ export const secondsSinceMidnightToTime = (seconds: number): string => {
 
 export const doesMatchHaveBothCompetitors = (match: Match) =>
   match.matchData.competingTrips.every((trip) => trip.routeId !== undefined);
+
+export const getDayOfWeekFromRoundNumber = (roundNumber: number) =>
+  ["Mon", "Tue", "Wed", "Thu", "Fri"][roundNumber];

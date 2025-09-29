@@ -193,6 +193,7 @@ export default function HomepageLayout(props: HomepageLayoutProps) {
                   matches={matchesForSelectedWeek}
                   selectedRound={selectedRound}
                   setSelectedMatch={setSelectedMatchId}
+                  setSelectedRound={setSelectedRound}
                 />
               )}
             </div>

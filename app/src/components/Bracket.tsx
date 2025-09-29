@@ -2,12 +2,17 @@ import { Match } from "../interfaces";
 import BracketMatch from "./BracketMatch";
 import styles from "./../../page.module.css";
 import { ROUND_NAMES } from "../constants";
-import { combineClasses, doesMatchHaveBothCompetitors } from "../util";
+import {
+  combineClasses,
+  doesMatchHaveBothCompetitors,
+  getDayOfWeekFromRoundNumber,
+} from "../util";
 
 interface BracketProps {
   matches: Match[];
   selectedRound: number;
   setSelectedMatch: (id: string) => void;
+  setSelectedRound: (round: number) => void;
 }
 
 const MATCH_HEIGHT_PX = 60;
@@ -149,7 +154,7 @@ export default function Bracket(props: BracketProps) {
   };
 
   const TOTAL_BRACKET_HEIGHT =
-    MATCH_VERTICAL_OFFSETS["6"] + MATCH_HEIGHT_PX + 50;
+    MATCH_VERTICAL_OFFSETS["6"] + MATCH_HEIGHT_PX + 60 + 10;
 
   return (
     <div
@@ -161,14 +166,20 @@ export default function Bracket(props: BracketProps) {
     >
       {[...Array(5).keys()].map((roundNumber) => (
         <div className={styles.roundHeader} key={roundNumber}>
-          <div
+          <button
             className={combineClasses(
               styles.roundHeaderText,
               props.selectedRound === roundNumber && styles.selectedRound
             )}
+            onClick={() => props.setSelectedRound(roundNumber)}
           >
-            {ROUND_NAMES[roundNumber]}
-          </div>
+            <div className={styles.roundNameWeekday}>
+              {getDayOfWeekFromRoundNumber(roundNumber)}
+            </div>
+            <div className={styles.roundNameInnerText}>
+              {ROUND_NAMES[roundNumber]}
+            </div>
+          </button>
         </div>
       ))}
       <div className={styles.round} id="round-1">
