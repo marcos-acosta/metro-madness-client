@@ -2,7 +2,7 @@ import { Match } from "../interfaces";
 import BracketMatch from "./BracketMatch";
 import styles from "./../../page.module.css";
 import { ROUND_NAMES } from "../constants";
-import { combineClasses } from "../util";
+import { combineClasses, doesMatchHaveBothCompetitors } from "../util";
 
 interface BracketProps {
   matches: Match[];
@@ -39,6 +39,7 @@ export default function Bracket(props: BracketProps) {
           width: `${MATCH_WIDTH_PX}px`,
           height: `${MATCH_HEIGHT_PX}px`,
         }}
+        disabled={!doesMatchHaveBothCompetitors(match)}
       >
         <BracketMatch match={match} />
       </button>

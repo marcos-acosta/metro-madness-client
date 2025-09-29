@@ -89,8 +89,8 @@ export const datestringToDate = (ds: string) => {
 export const getCurrentWeek = () => {
   const nycDate = getTodayDateEST();
 
-  const dayOfWeek = nycDate.getDay(); // 0 = Sunday, 1 = Monday, etc.
-  const daysBack = dayOfWeek === 1 ? 0 : dayOfWeek === 0 ? 6 : dayOfWeek - 1;
+  let dayOfWeek = nycDate.getDay(); // 0 = Sunday, 1 = Monday, etc.
+  const daysBack = dayOfWeek === 1 ? 0 : dayOfWeek === 0 ? -1 : dayOfWeek - 1;
 
   const latestMonday = new Date(nycDate);
   latestMonday.setDate(nycDate.getDate() - daysBack);
@@ -286,3 +286,6 @@ export const secondsSinceMidnightToTime = (seconds: number): string => {
   const minutesFormatted = `${minutes}`.padStart(2, "0");
   return `${displayHour}:${minutesFormatted} ${period}`;
 };
+
+export const doesMatchHaveBothCompetitors = (match: Match) =>
+  match.matchData.competingTrips.every((trip) => trip.routeId !== undefined);

@@ -71,7 +71,7 @@ export default function VerticalProgress(props: VerticalProgressProps) {
             rightTerminalText={
               segmentIndex === numSegments - 1
                 ? abridgeStationName(
-                    props.tripData.stops![numSegments + 1].stopName
+                    props.tripData.stops![segmentIndex + 1].stopName
                   )
                 : undefined
             }
