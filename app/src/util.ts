@@ -89,7 +89,7 @@ export const datestringToDate = (ds: string) => {
 export const getCurrentWeek = () => {
   const nycDate = getTodayDateEST();
 
-  let dayOfWeek = nycDate.getDay(); // 0 = Sunday, 1 = Monday, etc.
+  const dayOfWeek = nycDate.getDay(); // 0 = Sunday, 1 = Monday, etc.
   const daysBack = dayOfWeek === 1 ? 0 : dayOfWeek === 0 ? -1 : dayOfWeek - 1;
 
   const latestMonday = new Date(nycDate);
