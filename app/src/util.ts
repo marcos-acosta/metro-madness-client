@@ -181,6 +181,15 @@ export const formatDateShort = (date: Date) => {
   }).format(date);
 };
 
+export const formatDateShortWithDay = (date: Date) => {
+  return new Intl.DateTimeFormat("en-US", {
+    timeZone: "America/New_York",
+    month: "short",
+    day: "numeric",
+    weekday: "short",
+  }).format(date);
+};
+
 export const formatDatestringShort = (ds: string) => {
   return formatDateShort(datestringToDate(ds));
 };

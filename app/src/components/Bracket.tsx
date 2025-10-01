@@ -174,7 +174,7 @@ export default function Bracket(props: BracketProps) {
             onClick={() => props.setSelectedRound(roundNumber)}
           >
             <div className={styles.roundNameWeekday}>
-              {getDayOfWeekFromRoundNumber(roundNumber)}
+              {getDayOfWeekFromRoundNumber(roundNumber)} 5PM
             </div>
             <div className={styles.roundNameInnerText}>
               {ROUND_NAMES[roundNumber]}

@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { Match } from "../interfaces";
 import styles from "./../../page.module.css";
 import {
-  formatDateShort,
+  formatDateShortWithDay,
   getAllRoutesStillCompeting,
   getCurrentAndSurroundingWeeks,
   getCurrentWeek,
@@ -123,7 +123,7 @@ export default function HomepageLayout(props: HomepageLayoutProps) {
           <>
             <div className={styles.sectionHeaderOuterContainer}>
               <SectionHeader
-                text={`${formatDateShort(dateToShow)}: ${
+                text={`${formatDateShortWithDay(dateToShow)}: ${
                   selectedMatch.matchData.competingTrips[0].routeId
                 } train / ${
                   selectedMatch.matchData.competingTrips[1].routeId
@@ -142,7 +142,7 @@ export default function HomepageLayout(props: HomepageLayoutProps) {
           <>
             <div className={styles.sectionHeaderOuterContainer}>
               <SectionHeader
-                text={`${formatDateShort(dateToShow)}: ${roundName}`}
+                text={`${formatDateShortWithDay(dateToShow)}: ${roundName}`}
               >
                 <Navigator
                   onBack={() => {

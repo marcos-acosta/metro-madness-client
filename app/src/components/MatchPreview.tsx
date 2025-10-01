@@ -11,7 +11,7 @@ interface MatchPreviewProps {
 }
 
 const matchStatusToText = {
-  [MatchStatus.NOT_YET_STARTED]: "Upcoming",
+  [MatchStatus.NOT_YET_STARTED]: "Upcoming: 5PM",
   [MatchStatus.ONGOING]: "Live",
   [MatchStatus.ENDED]: "Final",
 };
