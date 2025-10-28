@@ -80,9 +80,10 @@ export default function HomepageLayout(props: HomepageLayoutProps) {
         try {
           const weeks = getCurrentAndSurroundingWeeks();
           const matchesResponse = await fetchBracketsInRange(
-            weeks[0],
-            weeks[weeks.length - 1]
+            weeks[1],
+            weeks[1]
           );
+          console.log(matchesResponse);
           setStoredMatches(matchesToCacheFormat(matchesResponse.matches));
           setIsLoading(false);
         } catch (error) {
